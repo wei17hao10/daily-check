@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of dprshell",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the number of dprshell",
+    "CheckContent": [
+        "select * from dprshell",
+        "0"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": ".",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-10-08",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-10-08",
+    "SortOrder": "1"
+}

@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of Dialog-DBQueue",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the number of DialogDBQueue",
+    "CheckContent": [
+        "select * from DialogDBQueue",
+        "10"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "check the number of DialogDBQueue",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-09-20",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-09-20",
+    "SortOrder": "1"
+}

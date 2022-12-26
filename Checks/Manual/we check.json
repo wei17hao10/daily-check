@@ -1,0 +1,15 @@
+{
+    "CheckName": "we check",
+    "Status": "active",
+    "Type": "Manual",
+    "Background": "we need to do the web check",
+    "CheckContent": "step1 \nstep12",
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "faied 1\nfailed 2",
+    "CreatedBy": "test",
+    "CreatedDate": "2022-08-12",
+    "UpdatedBy": "test",
+    "UpdatedDate": "2022-08-12",
+    "SortOrder": "1"
+}

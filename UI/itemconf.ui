@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>747</width>
+    <height>562</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Check Item Configuration</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTreeWidget" name="itemTree">
+      <property name="headerHidden">
+       <bool>false</bool>
+      </property>
+      <attribute name="headerCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string notr="true">Item Name</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Created By</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Created Date</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Update By</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Updated Date</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>747</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAdd_Item"/>
+   <addaction name="actionModify_Item"/>
+   <addaction name="actionDelete_Item"/>
+   <addaction name="actionDeactivate_Item"/>
+   <addaction name="actionActivate_Item"/>
+  </widget>
+  <action name="actionAdd_Item">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/add item.png</normaloff>../images/add item.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Item</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Item</string>
+   </property>
+  </action>
+  <action name="actionModify_Item">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/modify item.png</normaloff>../images/modify item.png</iconset>
+   </property>
+   <property name="text">
+    <string>Modify Item</string>
+   </property>
+   <property name="toolTip">
+    <string>Modify Item</string>
+   </property>
+  </action>
+  <action name="actionDelete_Item">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/delete item.png</normaloff>../images/delete item.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete Item</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Item</string>
+   </property>
+  </action>
+  <action name="actionDeactivate_Item">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/deactivate item.png</normaloff>../images/deactivate item.png</iconset>
+   </property>
+   <property name="text">
+    <string>Deactivate Item</string>
+   </property>
+   <property name="toolTip">
+    <string>Deactivate Item</string>
+   </property>
+  </action>
+  <action name="actionActivate_Item">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/activate item.png</normaloff>../images/activate item.png</iconset>
+   </property>
+   <property name="text">
+    <string>Activate Item</string>
+   </property>
+   <property name="toolTip">
+    <string>Activate Item</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

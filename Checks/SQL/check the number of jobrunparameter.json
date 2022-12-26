@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of jobrunparameter",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the number of jobrunparameter",
+    "CheckContent": [
+        "select * from JobRunParameter",
+        "0"
+    ],
+    "OBCondition": "ob",
+    "JBQCondition": "jobq",
+    "Operations": "jobrun\nparameter",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-04-16",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-08-29",
+    "SortOrder": "7"
+}

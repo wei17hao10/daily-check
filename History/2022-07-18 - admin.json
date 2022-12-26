@@ -1,0 +1,138 @@
+{
+    "check_user": "admin",
+    "check_date": "2022-07-18 12:45:20",
+    "check_content": [
+        {
+            "check_name": "ping active hosts",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "ping active hosts - 7.18",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "web check",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "web check - 7.18",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of default attestation policies",
+            "item_type": "SQL",
+            "count": 37,
+            "comment": "policy 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the nmber of dialogschedule",
+            "item_type": "SQL",
+            "count": 51,
+            "comment": "schedule - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of attestation object",
+            "item_type": "SQL",
+            "count": -1,
+            "comment": "attestation object - 7.18",
+            "check_result": [
+                "SQL issue",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of dialogmethod",
+            "item_type": "SQL",
+            "count": 35,
+            "comment": "dialogmethod - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of scripts",
+            "item_type": "SQL",
+            "count": 267,
+            "comment": "scripts - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of qbmevent",
+            "item_type": "SQL",
+            "count": 388,
+            "comment": "qbmevent - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobrunparameter",
+            "item_type": "SQL",
+            "count": 16721,
+            "comment": "jobrun - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobchain",
+            "item_type": "SQL",
+            "count": 353,
+            "comment": "jobchain - 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobautostart",
+            "item_type": "SQL",
+            "count": 27,
+            "comment": "auto start 7.18",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the num of jobqueue",
+            "item_type": "SQL",
+            "count": 0,
+            "comment": "jobq - 7.18",
+            "check_result": [
+                "executed",
+                "pass",
+                "auto pass"
+            ]
+        }
+    ]
+}

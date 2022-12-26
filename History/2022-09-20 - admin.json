@@ -1,0 +1,116 @@
+{
+    "check_user": "admin",
+    "check_date": "2022-09-20 13:29:12",
+    "check_content": [
+        {
+            "check_name": "ping active hosts",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "we check",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the nmber of dialogschedule",
+            "item_type": "SQL",
+            "count": 51,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "pass",
+                "auto pass"
+            ]
+        },
+        {
+            "check_name": "check the number of attestation object",
+            "item_type": "SQL",
+            "count": -1,
+            "comment": "",
+            "check_result": [
+                "SQL issue",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobrunparameter",
+            "item_type": "SQL",
+            "count": 16721,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobchain",
+            "item_type": "SQL",
+            "count": 353,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the num of jobqueue",
+            "item_type": "SQL",
+            "count": 1,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "pass",
+                "auto pass"
+            ]
+        },
+        {
+            "check_name": "check the number of qbmevent",
+            "item_type": "SQL",
+            "count": 388,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of dialogmethod",
+            "item_type": "SQL",
+            "count": 35,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "pass",
+                "auto pass"
+            ]
+        },
+        {
+            "check_name": "check the number of Dialog-DBQueue",
+            "item_type": "SQL",
+            "count": 0,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "pass",
+                "auto pass"
+            ]
+        }
+    ]
+}

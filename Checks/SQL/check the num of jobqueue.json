@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the num of jobqueue",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the num of jobqueue",
+    "CheckContent": [
+        "select * from jobqueue",
+        "10"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "check the num of jobqueue",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-06-22",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-09-20",
+    "SortOrder": "1"
+}

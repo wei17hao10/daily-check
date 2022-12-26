@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of attestation object",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the number of attestation object",
+    "CheckContent": [
+        "select * from AttestationObject1",
+        "0"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "need to check",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-04-11",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-04-11",
+    "SortOrder": "8"
+}

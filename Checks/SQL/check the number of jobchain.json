@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of jobchain",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "check the number of jobchain",
+    "CheckContent": [
+        "select * from jobchain",
+        "0"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "jobchain\noperations",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-04-18",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-04-20",
+    "SortOrder": "7"
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1123</width>
+    <height>804</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Daily Check</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QMdiArea" name="mdiArea"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1123</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Operations</string>
+    </property>
+    <addaction name="actionUser_Config"/>
+    <addaction name="actionDB_Config"/>
+    <addaction name="actionCheck_Item_Config"/>
+    <addaction name="actionExecute_all"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionUser_Config"/>
+   <addaction name="actionDB_Config"/>
+   <addaction name="actionCheck_Item_Config"/>
+   <addaction name="actionExecute_all"/>
+   <addaction name="actionExit"/>
+  </widget>
+  <action name="actionUser_Config">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/user.png</normaloff>../images/user.png</iconset>
+   </property>
+   <property name="text">
+    <string>User Configuration</string>
+   </property>
+   <property name="toolTip">
+    <string>User Configuration</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/退出.png</normaloff>../images/退出.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionDB_Config">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/配比数据库.png</normaloff>../images/配比数据库.png</iconset>
+   </property>
+   <property name="text">
+    <string>DB Configuration</string>
+   </property>
+   <property name="toolTip">
+    <string>DB Configuration</string>
+   </property>
+  </action>
+  <action name="actionAPI_Config">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/API接口.png</normaloff>../images/API接口.png</iconset>
+   </property>
+   <property name="text">
+    <string>API Configuration</string>
+   </property>
+   <property name="toolTip">
+    <string>API Configuration</string>
+   </property>
+  </action>
+  <action name="actionCheck_Item_Config">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/list.png</normaloff>../images/list.png</iconset>
+   </property>
+   <property name="text">
+    <string>Check Item Configuration</string>
+   </property>
+   <property name="toolTip">
+    <string>Check Item Configuration</string>
+   </property>
+  </action>
+  <action name="actionExecute_all">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/execute all.png</normaloff>../images/execute all.png</iconset>
+   </property>
+   <property name="text">
+    <string>Execute all</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute all</string>
+   </property>
+  </action>
+  <action name="actionExecute_one">
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/execute one.png</normaloff>../images/execute one.png</iconset>
+   </property>
+   <property name="text">
+    <string>Execute one</string>
+   </property>
+   <property name="toolTip">
+    <string>Execute one</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

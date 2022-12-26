@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of qbmevent",
+    "Status": "active",
+    "Type": "SQL",
+    "Background": "qbmevent",
+    "CheckContent": [
+        "select * from qbmevent a",
+        "0"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "..",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-08-15",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-08-15",
+    "SortOrder": "1"
+}

@@ -1,0 +1,15 @@
+{
+    "CheckName": "ping active hosts",
+    "Status": "active",
+    "Type": "Manual",
+    "Background": "ping back\nground\n\n",
+    "CheckContent": "ping 1 \nping 2\nping 3\n****\nping 1313",
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "operation steps\nstep2\nstep23\n\u3002",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-04-01",
+    "UpdatedBy": "test",
+    "UpdatedDate": "2022-08-29",
+    "SortOrder": "9"
+}

@@ -1,0 +1,18 @@
+{
+    "CheckName": "check the number of scripts",
+    "Status": "inactive",
+    "Type": "SQL",
+    "Background": "check the number of scripts",
+    "CheckContent": [
+        "select * from DialogScript",
+        "0"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "Operations",
+    "CreatedBy": "admin",
+    "CreatedDate": "2022-04-12",
+    "UpdatedBy": "admin",
+    "UpdatedDate": "2022-04-12",
+    "SortOrder": "9"
+}

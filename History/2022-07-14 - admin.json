@@ -1,0 +1,90 @@
+{
+    "check_user": "admin",
+    "check_date": "2022-07-10 21:47:11",
+    "check_content": [
+        {
+            "check_name": "ping active hosts",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "this is the comment of 07.14  active hosts",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "web check",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "this is the comment of 07.14 web check",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of default attestation policies",
+            "item_type": "SQL",
+            "count": 37,
+            "comment": "this is the comment of 07.14 - attestation policy",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the nmber of dialogschedule",
+            "item_type": "SQL",
+            "count": 51,
+            "comment": "this is the comment of 07.14 - schedule",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of attestation object",
+            "item_type": "SQL",
+            "count": -1,
+            "comment": "this is the comment of 07.14 - object",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of dialogmethod",
+            "item_type": "SQL",
+            "count": 35,
+            "comment": "this is the comment of 07.14  - method",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of scripts",
+            "item_type": "SQL",
+            "count": 267,
+            "comment": "this is the comment of 07.14  - script",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of qbmevent",
+            "item_type": "SQL",
+            "count": 388,
+            "comment": "this is the comment of 07.14 - qbmevent",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of jobrunparameter",
+            "item_type": "SQL",
+            "count": 16721,
+            "comment": "this is the comment of 07.14 - jobrunparamenter",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of jobchain",
+            "item_type": "SQL",
+            "count": 353,
+            "comment": "this is the comment of 07.14 - jobchian",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the number of jobautostart",
+            "item_type": "SQL",
+            "count": 27,
+            "comment": "this is the comment of 07.14 - jbautostart",
+            "check_result": "no operation"
+        },
+        {
+            "check_name": "check the num of jobqueue",
+            "item_type": "SQL",
+            "count": 0,
+            "comment": "this is the comment of 07.14 - jobq",
+            "check_result": "auto pass"
+        }
+    ]
+}

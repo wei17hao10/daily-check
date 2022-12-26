@@ -1,0 +1,105 @@
+{
+    "check_user": "test",
+    "check_date": "2022-08-13 16:39:15",
+    "check_content": [
+        {
+            "check_name": "ping active hosts",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "we check",
+            "item_type": "Manual",
+            "count": 0,
+            "comment": "",
+            "check_result": [
+                "need to check",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the nmber of dialogschedule",
+            "item_type": "SQL",
+            "count": 51,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of attestation object",
+            "item_type": "SQL",
+            "count": -1,
+            "comment": "",
+            "check_result": [
+                "SQL issue",
+                "-",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of dialogmethod",
+            "item_type": "SQL",
+            "count": 35,
+            "comment": "tests",
+            "check_result": [
+                "executed",
+                "fail",
+                "No Operation"
+            ]
+        },
+        {
+            "check_name": "check the number of scripts",
+            "item_type": "SQL",
+            "count": 267,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobrunparameter",
+            "item_type": "SQL",
+            "count": 16721,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the number of jobchain",
+            "item_type": "SQL",
+            "count": 353,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        },
+        {
+            "check_name": "check the num of jobqueue",
+            "item_type": "SQL",
+            "count": 7,
+            "comment": "",
+            "check_result": [
+                "executed",
+                "fail",
+                "no operation"
+            ]
+        }
+    ]
+}
