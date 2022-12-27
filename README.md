@@ -1,39 +1,19 @@
-# daily check
+# Daily Check Tool
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+## Backgroud
+This is a tool aiming to simplify the steps of daily check operations.
 
-#### 软件架构
-软件架构说明
+## Design
+I thought it would be a very simple tool, but actually it gets more and more complicated when new ideas come to me.
+Below is the simple description of some files in the project.
+- Checks : The folder where manual and sql checking rule are placed.
+- History : The folder where the daily check history results are placed.
+- UI : The folder where all the UI definition file are placed.
+- config : The folder where the database and user configuration file are placed.
+- images: The folder where all the icons and pictures are placed.
+- lib : just put one py file there, seems no necessary.
+- lib/share.py : The file that defines all the data structure and functions.
+- **main.py** : The file that is used to start the application.
+- **uiClass.py** : The file that defines the actual function of all the UIs.
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### Other info would be added if needed.
