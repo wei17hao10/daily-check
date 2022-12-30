@@ -34,6 +34,7 @@ class SI:
     strTodayTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     CheckItems = []
     itemDF = None
+    ChecksTodayNames = []
     ChecksToday = {}
     Checks1Day = {}
     Checks2Day = {}
@@ -255,12 +256,26 @@ class CheckResult:
                 shutil.move(f'{spath}/{fn}', f'{dpath}/{fn}')
 
     @staticmethod
-    def load_today_check():
+    def get_today_names():
         hpath = './History/Recent'
         files = os.listdir(hpath)
         files = sorted(files, key=lambda f: os.path.getmtime(os.path.join(hpath, f)), reverse=True)
         for fn in files:
             if SI.strToday in fn and fn.endswith('.json'):
+                SI.ChecksTodayNames.append(
+                    {"fileName": fn,
+                     # "createdDate": datetime.fromtimestamp(os.path.getctime(os.path.join(hpath, fn))).strftime('%Y-%m-%d %H:%M:%S'),
+                     "createdDate": os.path.getctime(os.path.join(hpath, fn)),
+                     "updatedDate": os.path.getmtime(os.path.join(hpath, fn))
+                     }
+                )
+
+    @staticmethod
+    def load_today_check(user):
+        hpath = './History/Recent'
+        files = os.listdir(hpath)
+        for fn in files:
+            if SI.strToday in fn and user in fn and fn.endswith('.json'):
                 try:
                     with open(f'{hpath}/{fn}', encoding='utf8') as f:
                         SI.ChecksToday = json.load(f)

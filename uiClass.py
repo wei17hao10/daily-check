@@ -627,6 +627,7 @@ class CheckAllResult:
         self.single_ui = None
         self.execute_flag = False
         self.load_items()
+        self.load_all_resinfo()
         self.ui.btn_executeAll.clicked.connect(self.execute_all)
         self.ui.btn_loadResult.clicked.connect(self.load_result)
         # self.es.update_execution_result.connect(self.update_result)
@@ -637,6 +638,14 @@ class CheckAllResult:
         SI.globalSignal.save_check_result.connect(self.display_error)
         SI.globalSignal.update_check_all.connect(self.update_tree)
         self.ui.treeResult.itemDoubleClicked.connect(self.open_single_result)
+
+    def load_all_resinfo(self):
+        CheckResult.get_today_names()
+        print(SI.ChecksTodayNames)
+        for n in SI.ChecksTodayNames:
+            user = n['fileName'].split('.')[0].split()[-1]
+            time = datetime.fromtimestamp(n['updatedDate']).strftime('%H:%M:%S')
+            self.ui.cbox_history.addItem(f'{time} - {user}')
 
     def load_items(self):
         items = SI.itemDF[SI.itemDF['status'] == 'active']
@@ -808,11 +817,14 @@ class CheckAllResult:
             self.display_error('No execution info')
         else:
             self.single_ui = SingleCheckResult(current_check)
-            # self.single_ui.ui.show()
+            self.single_ui.ui.show()
 
     def load_result(self):
-        if not self.execute_flag and SI.ChecksToday == {}:
-            if CheckResult.load_today_check():
+        # if not self.execute_flag and SI.ChecksToday == {}:
+        if not self.execute_flag:
+            curr_file = self.ui.cbox_history.currentText()
+            user = curr_file.split()[-1]
+            if CheckResult.load_today_check(user):
                 self.check_content = SI.ChecksToday["check_content"]
                 CheckResult.load_result()
                 self.ui.lineUser.setReadOnly(True)
@@ -821,7 +833,7 @@ class CheckAllResult:
                 self.ui.lineStart.setText(SI.ChecksToday["check_date"])
                 self.update_tree()
 
-                self.execute_flag = True
+                # self.execute_flag = True
             else:
                 QMessageBox.warning(self.ui, 'Warning', 'There is no execution today. Load Failed.')
 
@@ -832,9 +844,9 @@ class CheckAllResult:
             self.update_result(item, check["check_result"])
 
 
-class MyWidget(QWidget):
-    def closeEvent(self, event):
-        SI.globalSignal.close_further_check.emit(event)
+# class MyWidget(QWidget):
+#     def closeEvent(self, event):
+#         SI.globalSignal.close_further_check.emit(event)
         # SI.globalSignal.close_further_check.emit(True)
         # QMessageBox.Information(self, 'Info', 'close method triggered')
         # event.accept()
@@ -842,10 +854,10 @@ class MyWidget(QWidget):
 
 class SingleCheckResult:
     def __init__(self, current_check):
-        # self.ui = uic.loadUi("UI/further check.ui")
-        self.ui = UI.further_check.Ui_Form()
-        self.widget = MyWidget()
-        self.ui.setupUi(self.widget)
+        self.ui = uic.loadUi("UI/further check.ui")
+        # self.ui = UI.further_check.Ui_Form()
+        # self.widget = MyWidget()
+        # self.ui.setupUi(self.widget)
 
         self.current_check = current_check
         self.conn = None
@@ -874,16 +886,16 @@ class SingleCheckResult:
         self.ui.btn_jobq.clicked.connect(self.click_jobq)
         self.ui.btn_last.clicked.connect(self.click_last)
         self.ui.btn_next.clicked.connect(self.click_next)
-        self.ui.btn_close.clicked.connect(self.widget.close)
+        self.ui.btn_close.clicked.connect(self.on_close)
         self.ui.btn_day1ago.clicked.connect(self.click_previous_1)
         self.ui.btn_day2ago.clicked.connect(self.click_previous_2)
         self.ui.btn_day3ago.clicked.connect(self.click_previous_3)
         # self.ui.textComments.textChanged.connect(self.my_close)
-        SI.globalSignal.close_further_check.connect(self.on_close)
+        # SI.globalSignal.close_further_check.connect(self.on_close)
 
         self.load_data()
 
-        self.widget.show()
+        # self.widget.show()
 
     def init_again(self, current_check):
         self.current_check = current_check
@@ -1013,9 +1025,9 @@ class SingleCheckResult:
             self.fields = [field[0] for field in cursor.description]
             self.rows = cursor.fetchall()
         except pymssql.ProgrammingError:
-            QMessageBox.warning(self.widget, 'Warning', 'Programming Error, please check the SQL.')
+            QMessageBox.warning(self.ui, 'Warning', 'Programming Error, please check the SQL.')
         except pymssql.Error:
-            QMessageBox.warning(self.widget, 'Warning', 'General Error')
+            QMessageBox.warning(self.ui, 'Warning', 'General Error')
         else:
             self.ui.line_num.setText(str(len(self.rows)))
         self.single_exe_flag = False
@@ -1040,30 +1052,30 @@ class SingleCheckResult:
     def click_sql(self):
         if len(self.check_sql.strip()) > 0 and self.current_check["item_type"] == 'SQL':
             cpb.copy(self.check_sql)
-            QMessageBox.information(self.widget, 'Info', 'SQL is copied.')
+            QMessageBox.information(self.ui, 'Info', 'SQL is copied.')
 
     def click_ob(self):
         if len(self.ob_condition.strip()) == 0:
             return
         cpb.copy(self.ob_condition)
-        QMessageBox.information(self.widget, 'Info', 'OB condition is copied.')
+        QMessageBox.information(self.ui, 'Info', 'OB condition is copied.')
 
     def click_jobq(self):
         if len(self.jobq_condition.strip()) == 0:
             return
         cpb.copy(self.jobq_condition)
-        QMessageBox.information(self.widget, 'Info', 'jobQ condition is copied.')
+        QMessageBox.information(self.ui, 'Info', 'jobQ condition is copied.')
 
     def click_last(self):
         this_comment = self.ui.textComments.toPlainText()
         if len(this_comment.strip()) == 0:
-            QMessageBox.warning(self.widget, 'Warning', 'Operation Comments can not be empty.')
+            QMessageBox.warning(self.ui, 'Warning', 'Operation Comments can not be empty.')
         else:
             self.update_comment()
 
             i = self.namelist.index(self.check_name)
             if i - 1 < 0:
-                QMessageBox.information(self.widget, 'Info', 'This is the first check item.')
+                QMessageBox.information(self.ui, 'Info', 'This is the first check item.')
             else:
                 current_check = CheckResult.get_check(self.namelist[i-1], SI.ChecksToday)
                 self.init_again(current_check)
@@ -1071,7 +1083,7 @@ class SingleCheckResult:
     def click_next(self):
         this_comment = self.ui.textComments.toPlainText()
         if len(this_comment.strip()) == 0:
-            QMessageBox.warning(self.widget, 'Warning', 'Operation Comments can not be empty.')
+            QMessageBox.warning(self.ui, 'Warning', 'Operation Comments can not be empty.')
         else:
             self.update_comment()
 
@@ -1081,18 +1093,17 @@ class SingleCheckResult:
                 current_check = CheckResult.get_check(self.namelist[i+1], SI.ChecksToday)
                 self.init_again(current_check)
             else:
-                QMessageBox.information(self.widget, 'Info', 'This is the last check item.')
+                QMessageBox.information(self.ui, 'Info', 'This is the last check item.')
 
-    def on_close(self, event):
+    def on_close(self):
         this_comment = self.ui.textComments.toPlainText()
         if len(this_comment.strip()) == 0:
-            QMessageBox.warning(self.widget, 'Warning', 'Operation Comments can not be empty.')
-            event.ignore()
+            QMessageBox.warning(self.ui, 'Warning', 'Operation Comments can not be empty.')
         else:
             self.update_comment()
             self.close_db_conn()
             CheckResult.save_result()
-            event.accept()
+            self.ui.close()
             SI.globalSignal.update_check_all.emit(True)
 
     def update_comment(self):
@@ -1149,7 +1160,7 @@ class SingleCheckResult:
                 self.conn = pymssql.connect(SI.dbCfg['Server'], SI.dbCfg['Username'], SI.dbCfg['Password'],
                                             SI.dbCfg['Schema'])
             except pymssql.InterfaceError:
-                QMessageBox.warning(self.widget, 'Error', 'Connection Error')
+                QMessageBox.warning(self.ui, 'Error', 'Connection Error')
 
     def close_db_conn(self):
         if self.conn is not None:

@@ -10,7 +10,7 @@
             "username": "test",
             "joindate": "2022-08-09",
             "execution": 2,
-            "configuration": 0
+            "configuration": 2
         },
         {
             "username": "exe",
@@ -19,5 +19,5 @@
             "configuration": 0
         }
     ],
-    "UpdateDate": "2022-09-22"
+    "UpdateDate": "2022-12-29"
 }
