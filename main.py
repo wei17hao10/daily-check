@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
-from uiClass import Login
-from lib.share import SI
+from core.login import Login
+from core.share import SI
 
 
 if __name__ == '__main__':

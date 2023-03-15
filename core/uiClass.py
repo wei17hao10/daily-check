@@ -4,12 +4,11 @@ import pymssql
 import pyperclip as cpb
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMessageBox, QMdiSubWindow, QTableWidgetItem, QTreeWidgetItem, QInputDialog, QLineEdit, \
-    QAbstractItemView, QHeaderView, QWidget
+    QAbstractItemView, QHeaderView
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QColor
 
-import UI.further_check
-from lib.share import SI, ItemMgt, CheckResult, CheckItem
+from core.share import SI, ItemMgt, CheckResult, CheckItem
 from datetime import datetime
 from time import sleep
 from threading import Thread
@@ -83,7 +82,7 @@ class UserConfig:
                     'UpdateDate': datetime.now().strftime('%Y-%m-%d')
                     }
         SI.userinfo = userinfo
-        with open('config/users.json', 'w+', encoding='utf8') as f:
+        with open('conf/users.json', 'w+', encoding='utf8') as f:
             json.dump(userinfo, f, indent=4)
 
     def add_user(self):
@@ -148,7 +147,7 @@ class DBConfig:
         logtext.ensureCursorVisible()
 
     def _saveCfgFile(self):
-        with open('config/dbcfg.json', 'w+', encoding='utf8') as f:
+        with open('conf/dbcfg.json', 'w+', encoding='utf8') as f:
             json.dump(SI.dbCfg, f, indent=4)
 
     def clearLog(self):
@@ -244,7 +243,7 @@ class CheckItemConfig:
         tree = self.ui.itemTree
         root = tree.invisibleRootItem()
         folderItem = QTreeWidgetItem()
-        folderIcon = QIcon("./images/folder.png")
+        folderIcon = QIcon("../images/folder.png")
         # 设置节点图标
         folderItem.setIcon(self.headerName['Item Name'], folderIcon)
         # 设置该节点  第1个column 文本
@@ -269,11 +268,11 @@ class CheckItemConfig:
             leafItem.setTextAlignment(self.headerName['Sort Order'], Qt.AlignVCenter | Qt.AlignHCenter)
 
             if item[3] == 'active':
-                leafIcon = QIcon("./images/active item.png")
+                leafIcon = QIcon("../images/active item.png")
                 leafItem.setIcon(self.headerName['Item Name'], leafIcon)
                 leafItem.setForeground(self.headerName['Item Name'], QColor('black'))
             elif item[3] == 'inactive':
-                leafIcon = QIcon("./images/deactived item.png")
+                leafIcon = QIcon("../images/deactived item.png")
                 leafItem.setIcon(self.headerName['Item Name'], leafIcon)
                 leafItem.setForeground(self.headerName['Item Name'], QColor(180, 180, 180))
                 leafItem.setForeground(self.headerName['Created By'], QColor(180, 180, 180))
@@ -331,7 +330,7 @@ class CheckItemConfig:
                 curritem.save_check_item()
                 ItemMgt.update_itemdf()
                 # set icon and color
-                leafIcon = QIcon("./images/deactived item.png")
+                leafIcon = QIcon("../images/deactived item.png")
                 currentItem.setIcon(self.headerName['Item Name'], leafIcon)
                 currentItem.setForeground(self.headerName['Item Name'], QColor(180, 180, 180))
                 currentItem.setForeground(self.headerName['Created By'], QColor(180, 180, 180))
@@ -358,7 +357,7 @@ class CheckItemConfig:
                 curritem.save_check_item()
                 ItemMgt.update_itemdf()
                 # set icon and color
-                leafIcon = QIcon("./images/active item.png")
+                leafIcon = QIcon("../images/active item.png")
                 currentItem.setIcon(self.headerName['Item Name'], leafIcon)
                 currentItem.setForeground(self.headerName['Item Name'], QColor('black'))
                 currentItem.setForeground(self.headerName['Created By'], QColor('black'))
@@ -783,17 +782,17 @@ class CheckAllResult:
         item.setText(2, result[0])
 
         if result[1] == 'pass':
-            icon = QIcon("./images/executed successful.png")
+            icon = QIcon("../images/executed successful.png")
         elif result[1] == 'fail':
-            icon = QIcon("./images/executed failed.png")
+            icon = QIcon("../images/executed failed.png")
         else:
-            icon = QIcon("./images/manual.png")
+            icon = QIcon("../images/manual.png")
         item.setIcon(3, icon)
         item.setText(3, result[1])
         item.setTextAlignment(3, Qt.AlignVCenter | Qt.AlignHCenter)
 
         if "Operation Done" == result[2]:
-            icon = QIcon("./images/workaround.png")
+            icon = QIcon("../images/workaround.png")
             item.setIcon(4, icon)
             item.setText(4, result[2])
             item.setTextAlignment(4, Qt.AlignVCenter | Qt.AlignHCenter)

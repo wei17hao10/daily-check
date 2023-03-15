@@ -43,14 +43,14 @@ class SI:
 
     @staticmethod
     def loadDBCfgFile():
-        if os.path.exists('config/dbcfg.json'):
-            with open('config/dbcfg.json', encoding='utf8') as f:
+        if os.path.exists('conf/dbcfg.json'):
+            with open('conf/dbcfg.json', encoding='utf8') as f:
                 SI.dbCfg = json.load(f)
 
     @staticmethod
     def loadUsersFile():
-        if os.path.exists('config/users.json'):
-            with open('config/users.json', encoding='utf8') as f:
+        if os.path.exists('conf/users.json'):
+            with open('conf/users.json', encoding='utf8') as f:
                 SI.userinfo = json.load(f)
 
 
