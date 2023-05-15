@@ -230,7 +230,7 @@ class CheckAllResult:
                 self.ui.lineStart.setText(SI.ChecksToday["check_date"])
                 self.update_tree()
 
-                # self.execute_flag = True
+                self.execute_flag = True
             else:
                 QMessageBox.warning(self.ui, 'Warning', 'There is no execution today. Load Failed.')
 
