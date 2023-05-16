@@ -7,7 +7,7 @@ import pyperclip as cpb
 
 
 class SingleCheckResult:
-    def __init__(self, current_check):
+    def __init__(self, current_check, is_hide_pass):
         self.ui = uic.loadUi("UI/further check.ui")
         # self.ui = UI.further_check.Ui_Form()
         # self.widget = MyWidget()
@@ -25,6 +25,7 @@ class SingleCheckResult:
         self.day3comment = ''
         self.check_name = self.current_check["check_name"]
         self.single_exe_flag = False
+        self.is_hide_pass: bool = is_hide_pass
 
         self.namelist = [item[2] for item in SI.itemDF[SI.itemDF['status'] == 'active'].values]
         self.btn_style = {
@@ -93,8 +94,8 @@ class SingleCheckResult:
 
         today_check = CheckResult.get_check(self.check_name, SI.ChecksToday)
         this_comment = today_check["comment"]
-        if len(this_comment.strip()) == 0 and today_check["item_type"] == "SQL" and today_check["count"] == 0:
-            this_comment = "auto pass"
+        # if len(this_comment.strip()) == 0 and today_check["item_type"] == "SQL" and today_check["check_result"][2] == "auto pass":
+        #     this_comment = "auto pass"
         self.ui.textComments.setText(this_comment)
 
         self.ui.line_num.setReadOnly(True)
@@ -243,11 +244,18 @@ class SingleCheckResult:
 
             nlistlen = len(self.namelist)
             i = self.namelist.index(self.check_name)
-            if i + 1 < nlistlen:
-                current_check = CheckResult.get_check(self.namelist[i+1], SI.ChecksToday)
-                self.init_again(current_check)
-            else:
-                QMessageBox.information(self.ui, 'Info', 'This is the last check item.')
+
+            while True:
+                i += 1
+                if i < nlistlen:
+                    current_check = CheckResult.get_check(self.namelist[i], SI.ChecksToday)
+                    if current_check["comment"] == "auto pass" and self.is_hide_pass:
+                        continue
+                    self.init_again(current_check)
+                    break
+                else:
+                    QMessageBox.information(self.ui, 'Info', 'This is the last check item.')
+                    break
 
     def on_close(self):
         this_comment = self.ui.textComments.toPlainText()

@@ -105,7 +105,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="rb_hidePass">
        <property name="text">
         <string>Hide passed items</string>
        </property>

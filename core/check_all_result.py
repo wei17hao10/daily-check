@@ -23,6 +23,7 @@ class CheckAllResult:
         # self.check_result = {}
         self.single_ui = None
         self.execute_flag = False
+        self.is_hide_passed: bool = True
         self.load_items()
         self.load_all_resinfo()
         self.ui.btn_executeAll.clicked.connect(self.execute_all)
@@ -35,6 +36,10 @@ class CheckAllResult:
         SI.globalSignal.save_check_result.connect(self.display_error)
         SI.globalSignal.update_check_all.connect(self.update_tree)
         self.ui.treeResult.itemDoubleClicked.connect(self.open_single_result)
+        self.ui.rb_hidePass.toggled.connect(self.rb_hide_passed_toggled)
+
+    def rb_hide_passed_toggled(self, checked):
+        self.is_hide_passed = checked
 
     def load_all_resinfo(self):
         CheckResult.get_today_names()
@@ -114,6 +119,7 @@ class CheckAllResult:
         item_type = si_item.type
         check_result = 'no operation'
         rowlen = 0
+        comment = ''
         display_res = []
         if si_item.type == 'Manual':
             display_res = ['need to check', '-', check_result]
@@ -121,6 +127,7 @@ class CheckAllResult:
             rowlen = self.execute_sql(si_item.check[0])
             if 0 <= rowlen <= int(si_item.check[1]):
                 check_result = 'auto pass'
+                comment = check_result
                 display_res = ['executed', 'pass', check_result]
             elif rowlen > 0:
                 display_res = ['executed', 'fail', check_result]
@@ -133,7 +140,7 @@ class CheckAllResult:
         self.check_content.append({"check_name": item_name,
                                    "item_type": item_type,
                                    "count": rowlen,
-                                   "comment": '',
+                                   "comment": comment,
                                    "check_result": display_res})
 
     def execute_sql(self, sql):
@@ -203,17 +210,17 @@ class CheckAllResult:
     def display_error(self, error):
         QMessageBox.warning(self.ui, 'Error', error)
 
-    def open_single_result(self, currentItem, vol):
+    def open_single_result(self, current_item, vol):
         if not self.execute_flag:
             self.display_error('No execution or execution is not finished.')
             return
 
-        item_name = currentItem.text(0)
+        item_name = current_item.text(0)
         current_check = CheckResult.get_check(item_name, SI.ChecksToday)
         if current_check is None:
             self.display_error('No execution info')
         else:
-            self.single_ui = SingleCheckResult(current_check)
+            self.single_ui = SingleCheckResult(current_check, self.is_hide_passed)
             self.single_ui.ui.show()
 
     def load_result(self):
