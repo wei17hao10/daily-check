@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QMessageBox
 from core.display_result import DisplaySQLResult
 import pymssql
 import pyperclip as cpb
+from PyQt5.QtCore import QTimer
+
 
 
 class SingleCheckResult:
@@ -207,7 +209,8 @@ class SingleCheckResult:
     def click_sql(self):
         if len(self.check_sql.strip()) > 0 and self.current_check["item_type"] == 'SQL':
             cpb.copy(self.check_sql)
-            QMessageBox.information(self.ui, 'Info', 'SQL is copied.')
+            # QMessageBox.information(self.ui, 'Info', 'SQL is copied.')
+            # timer = QTimer(msg_box)
 
     def click_ob(self):
         if len(self.ob_condition.strip()) == 0:
@@ -229,11 +232,18 @@ class SingleCheckResult:
             self.update_comment()
 
             i = self.namelist.index(self.check_name)
-            if i - 1 < 0:
-                QMessageBox.information(self.ui, 'Info', 'This is the first check item.')
-            else:
-                current_check = CheckResult.get_check(self.namelist[i-1], SI.ChecksToday)
-                self.init_again(current_check)
+
+            while True:
+                i -= 1
+                if i < 0:
+                    QMessageBox.information(self.ui, 'Info', 'This is the first check item.')
+                    break
+                else:
+                    current_check = CheckResult.get_check(self.namelist[i], SI.ChecksToday)
+                    if current_check["check_result"][2] == "auto pass" and self.is_hide_pass:
+                        continue
+                    self.init_again(current_check)
+                    break
 
     def click_next(self):
         this_comment = self.ui.textComments.toPlainText()
@@ -249,7 +259,7 @@ class SingleCheckResult:
                 i += 1
                 if i < nlistlen:
                     current_check = CheckResult.get_check(self.namelist[i], SI.ChecksToday)
-                    if current_check["comment"] == "auto pass" and self.is_hide_pass:
+                    if current_check["check_result"][2] == "auto pass" and self.is_hide_pass:
                         continue
                     self.init_again(current_check)
                     break
@@ -267,6 +277,8 @@ class SingleCheckResult:
             CheckResult.save_result()
             self.ui.close()
             SI.globalSignal.update_check_all.emit(True)
+            SI.mainWin.ui.hide()
+            SI.mainWin.ui.show()
 
     def update_comment(self):
         today_check = CheckResult.get_check(self.check_name, SI.ChecksToday)
