@@ -187,20 +187,20 @@ class CheckAllResult:
         item.setText(2, result[0])
 
         if result[1] == 'pass':
-            icon = QIcon("../images/executed successful.png")
+            icon = QIcon("./images/executed successful.png")
         elif result[1] == 'fail':
-            icon = QIcon("../images/executed failed.png")
+            icon = QIcon("./images/executed failed.png")
         else:
-            icon = QIcon("../images/manual.png")
+            icon = QIcon("./images/manual.png")
         item.setIcon(3, icon)
         item.setText(3, result[1])
         item.setTextAlignment(3, Qt.AlignVCenter | Qt.AlignHCenter)
 
         if "Operation Done" == result[2]:
-            icon = QIcon("../images/workaround.png")
+            icon = QIcon("./images/workaround.png")
             item.setIcon(4, icon)
             item.setText(4, result[2])
-            item.setTextAlignment(4, Qt.AlignVCenter | Qt.AlignHCenter)
+            item.setTextAlignment(4, Qt.AlignVCenter | Qt.AlignLeft)
             item.setForeground(4, QColor('black'))
         else:
             icon = QIcon()

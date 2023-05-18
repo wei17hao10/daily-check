@@ -37,6 +37,9 @@
   <property name="windowTitle">
    <string>Login</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Titillium Web&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="2,1,1,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -59,8 +62,11 @@
        </property>
        <property name="font">
         <font>
-         <family>等线 Light</family>
-         <pointsize>15</pointsize>
+         <family>Titillium Web</family>
+         <pointsize>9</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
         </font>
        </property>
        <property name="pixmap">

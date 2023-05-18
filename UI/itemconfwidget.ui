@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Item Configuration</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Titillium Web&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
