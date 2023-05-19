@@ -260,6 +260,7 @@ class CheckResult:
         hpath = './History/Recent'
         files = os.listdir(hpath)
         files = sorted(files, key=lambda f: os.path.getmtime(os.path.join(hpath, f)), reverse=True)
+        SI.ChecksTodayNames = []
         for fn in files:
             if SI.strToday in fn and fn.endswith('.json'):
                 SI.ChecksTodayNames.append(

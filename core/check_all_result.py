@@ -43,7 +43,7 @@ class CheckAllResult:
 
     def load_all_resinfo(self):
         CheckResult.get_today_names()
-        print(SI.ChecksTodayNames)
+        # print(SI.ChecksTodayNames)
         for n in SI.ChecksTodayNames:
             user = n['fileName'].split('.')[0].split()[-1]
             time = datetime.fromtimestamp(n['updatedDate']).strftime('%H:%M:%S')

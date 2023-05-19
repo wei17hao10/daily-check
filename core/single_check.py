@@ -109,8 +109,7 @@ class SingleCheckResult:
 
         today_check = CheckResult.get_check(self.check_name, SI.ChecksToday)
         this_comment = today_check["comment"]
-        # if len(this_comment.strip()) == 0 and today_check["item_type"] == "SQL" and today_check["check_result"][2] == "auto pass":
-        #     this_comment = "auto pass"
+
         self.ui.textComments.setText(this_comment)
 
         self.ui.line_num.setReadOnly(True)
@@ -140,47 +139,34 @@ class SingleCheckResult:
         else:
             self.ui.btn_jobq.setStyleSheet(self.btn_style["grey"])
 
-        first_comment = 0
         if SI.Checks1Day != {}:
             day1check = CheckResult.get_check(self.check_name, SI.Checks1Day)
             if day1check is not None:
-                self.day1comment = day1check["comment"]
-                if first_comment == 0:
-                    first_comment = 1
+                self.day1comment = '--[no COMMENT this day]--' if day1check["comment"] == '' else day1check["comment"]
+            else:
+                self.day1comment = '--[no CHECK this day]--'
+        else:
+            self.day1comment = '--[no CHECK this day]--'
 
         if SI.Checks2Day != {}:
             day2check = CheckResult.get_check(self.check_name, SI.Checks2Day)
             if day2check is not None:
-                self.day2comment = day2check["comment"]
-                if first_comment == 0:
-                    first_comment = 2
+                self.day2comment = '--[no COMMENT this day]--' if day2check["comment"] == '' else day2check["comment"]
+            else:
+                self.day2comment = '--[no CHECK this day]--'
+        else:
+            self.day2comment = '--[no CHECK this day]--'
 
         if SI.Checks3Day != {}:
             day3check = CheckResult.get_check(self.check_name, SI.Checks3Day)
             if day3check is not None:
-                self.day3comment = day3check["comment"]
-                if first_comment == 0:
-                    first_comment = 3
-
-        # print('first_comment:' + str(first_comment))
-        if first_comment == 1:
-            self.click_previous_1()
-        elif first_comment == 2:
-            self.click_previous_2()
-        elif first_comment == 3:
-            self.click_previous_3()
+                self.day3comment = '--[no COMMENT this day]--' if day3check["comment"] == '' else day3check["comment"]
+            else:
+                self.day3comment = '--[no CHECK this day]--'
         else:
-            btn_style = self.btn_style["grey"]
-            self.ui.btn_day1ago.setStyleSheet(btn_style)
-            self.ui.btn_day2ago.setStyleSheet(btn_style)
-            self.ui.btn_day3ago.setStyleSheet(btn_style)
+            self.day3comment = '--[no CHECK this day]--'
 
-    # self.ui.btn_day1ago.setStyleSheet('''
-        # QPushButton{border-radius:2px;background:rgb(211,211,211);font-family:'微软雅黑';color:rgb(255,182,193);font-size:18px;}
-        # /* 按钮圆角 2个像素              背景颜色                      字体                  字体颜色      字体大小      */
-        # QPushButton:hover{border-radius:50px;background:rgb(100,149,237);font-family:'微软雅黑';color:rgb(255,255,255);font-size:16px;}
-        # /*鼠标指向按钮后按钮变化*/
-        #    ''')
+        self.click_previous_1()
 
     def execute_sql(self):
         if self.single_exe_flag:
@@ -317,42 +303,22 @@ class SingleCheckResult:
         today_check["check_result"][2] = final
 
     def click_previous_1(self):
-        if len(self.day1comment.strip()) == 0:
-            return
         self.ui.btn_day1ago.setStyleSheet(self.btn_style["blue"])
-
-        btn_style = self.btn_style["grey"] if len(self.day2comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day2ago.setStyleSheet(btn_style)
-
-        btn_style = self.btn_style["grey"] if len(self.day3comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day3ago.setStyleSheet(btn_style)
-
+        self.ui.btn_day2ago.setStyleSheet(self.btn_style["black"])
+        self.ui.btn_day3ago.setStyleSheet(self.btn_style["black"])
         self.ui.textPreComment.setText(self.day1comment)
 
+
     def click_previous_2(self):
-        if len(self.day2comment.strip()) == 0:
-            return
+        self.ui.btn_day1ago.setStyleSheet(self.btn_style["black"])
         self.ui.btn_day2ago.setStyleSheet(self.btn_style["blue"])
-
-        btn_style = self.btn_style["grey"] if len(self.day1comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day1ago.setStyleSheet(btn_style)
-
-        btn_style = self.btn_style["grey"] if len(self.day3comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day3ago.setStyleSheet(btn_style)
-
+        self.ui.btn_day3ago.setStyleSheet(self.btn_style["black"])
         self.ui.textPreComment.setText(self.day2comment)
 
     def click_previous_3(self):
-        if len(self.day3comment.strip()) == 0:
-            return
+        self.ui.btn_day1ago.setStyleSheet(self.btn_style["black"])
+        self.ui.btn_day2ago.setStyleSheet(self.btn_style["black"])
         self.ui.btn_day3ago.setStyleSheet(self.btn_style["blue"])
-
-        btn_style = self.btn_style["grey"] if len(self.day1comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day1ago.setStyleSheet(btn_style)
-
-        btn_style = self.btn_style["grey"] if len(self.day2comment.strip()) == 0 else self.btn_style["black"]
-        self.ui.btn_day2ago.setStyleSheet(btn_style)
-
         self.ui.textPreComment.setText(self.day3comment)
 
     def copy_comment(self):
