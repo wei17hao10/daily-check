@@ -308,7 +308,6 @@ class SingleCheckResult:
         self.ui.btn_day3ago.setStyleSheet(self.btn_style["black"])
         self.ui.textPreComment.setText(self.day1comment)
 
-
     def click_previous_2(self):
         self.ui.btn_day1ago.setStyleSheet(self.btn_style["black"])
         self.ui.btn_day2ago.setStyleSheet(self.btn_style["blue"])

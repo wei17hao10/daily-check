@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMessageBox
 from datetime import datetime
 import pymssql
 from core.display_result import DisplaySQLResult
+from core.powershell import PowerShell
 
 
 class AddItem:
@@ -32,6 +33,14 @@ class AddItem:
         self.ui.btn_execute.clicked.connect(self.execute_sql)
         self.ui.btn_checkres.clicked.connect(self.display_result)
         self.ui.lineThreshold.setText(self.check[1])
+        self.ui.btn_exeps.clicked.connect(self.execute_ps)
+        self.ui.btn_checkpsres.clicked.connect(self.check_ps_result)
+
+    def execute_ps(self):
+        pass
+
+    def check_ps_result(self):
+        pass
 
     def execute_sql(self):
         self.create_db_conn()

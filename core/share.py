@@ -28,7 +28,7 @@ class SI:
     dbCfg = {}
     userinfo = {}
     subWinTable = {}
-    ITEM_TYPE = ['SQL', 'Manual']
+    ITEM_TYPE = ['SQL', 'Manual', 'Powershell', 'Python']
     user = ''
     strToday = datetime.now().strftime('%Y-%m-%d')
     strTodayTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
