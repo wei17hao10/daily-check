@@ -35,11 +35,26 @@ class AddItem:
         self.ui.lineThreshold.setText(self.check[1])
         self.ui.btn_exeps.clicked.connect(self.execute_ps)
         self.ui.btn_checkpsres.clicked.connect(self.check_ps_result)
+        self.ui.btn_exepy.clicked.connect(self.execute_py)
+        self.ui.btn_checkpyres.clicked.connect(self.check_py_result)
 
     def execute_ps(self):
-        pass
+        ps_cmd = self.ui.te_psScript.toPlainText()
+        print(ps_cmd)
+        with PowerShell('GBK') as ps:
+            print('in ps')
+            outs, errs = ps.run(ps_cmd)
+        res = 'Output:\n' + outs
+        print(res)
+        QMessageBox.information(self.ui, 'Powershell result', res, QMessageBox.Close)
 
     def check_ps_result(self):
+        pass
+
+    def execute_py(self):
+        pass
+
+    def check_py_result(self):
         pass
 
     def execute_sql(self):
@@ -76,16 +91,16 @@ class AddItem:
             self.check[1] = self.ui.lineThreshold.text()
             self.operations = self.ui.SQLOpsText.toPlainText()
             # print('after ops')
-            if len(self.background) == 0:
+            if len(self.background.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
                 return False
-            elif len(self.check[0]) == 0:
+            elif len(self.check[0].strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input SQL.')
                 return False
             elif not self.check[1].isdigit():
                 QMessageBox.warning(self.ui, 'Warning', 'Threshold is not a number.')
                 return False
-            elif len(self.operations) == 0:
+            elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
                 return False
             else:
@@ -95,13 +110,47 @@ class AddItem:
             self.background = self.ui.MBackgroundText.toPlainText()
             self.check[0] = self.ui.MCheckProcessText.toPlainText()
             self.operations = self.ui.MOpsText.toPlainText()
-            if len(self.background) == 0:
+            if len(self.background.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
                 return False
-            elif len(self.check[0]) == 0:
+            elif len(self.check[0].strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input manual check process.')
                 return False
-            elif len(self.operations) == 0:
+            elif len(self.operations.strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
+                return False
+            else:
+                return True
+        elif self.type == 'Powershell':
+            self.background = self.ui.PSBackgroundText.toPlainText()
+            self.check[0] = self.ui.te_psScript.toPlainText()
+            self.check[1] = self.ui.te_checkPSOutput.toPlainText()
+            self.operations = self.ui.te_psOps.toPlainText()
+            # print('after ops')
+            if len(self.background.strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
+                return False
+            elif len(self.check[0].strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please Powershell script.')
+                return False
+            elif len(self.operations.strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
+                return False
+            else:
+                return True
+        elif self.type == 'Python':
+            self.background = self.ui.PyBackgroundText.toPlainText()
+            self.check[0] = self.ui.te_pyScript.toPlainText()
+            self.check[1] = self.ui.te_checkPyOutput.toPlainText()
+            self.operations = self.ui.te_pyOps.toPlainText()
+            # print('after ops')
+            if len(self.background.strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
+                return False
+            elif len(self.check[0].strip()) == 0:
+                QMessageBox.warning(self.ui, 'Warning', 'Please Python script.')
+                return False
+            elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
                 return False
             else:

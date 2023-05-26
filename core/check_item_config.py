@@ -77,6 +77,8 @@ class CheckItemConfig:
     def load_item_info(self):
         self.ui.itemTree.clear()
         self.load_item_type('Manual')
+        self.load_item_type('Powershell')
+        self.load_item_type('Python')
         self.load_item_type('SQL')
 
         self.ui.itemTree.header().setSectionResizeMode(0, QHeaderView.ResizeToContents)

@@ -123,7 +123,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedAddInfo">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="SQLPage">
       <layout class="QVBoxLayout" name="verticalLayout_6" stretch="2,4,3,3">
@@ -548,7 +548,7 @@
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="text">
-            <string>Scripts</string>
+            <string>Powershell Scripts</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -558,7 +558,7 @@
          <item>
           <widget class="QTextEdit" name="te_psScript">
            <property name="placeholderText">
-            <string>Please input powershell script</string>
+            <string>(Mandatory) Please input powershell script</string>
            </property>
           </widget>
          </item>
@@ -581,9 +581,9 @@
           </layout>
          </item>
          <item>
-          <widget class="QTextEdit" name="te_checkOutput">
+          <widget class="QTextEdit" name="te_checkPSOutput">
            <property name="placeholderText">
-            <string>Please input result checking function with Python</string>
+            <string>(Optional) Please input result checking function with Python</string>
            </property>
           </widget>
          </item>
@@ -620,7 +620,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="SQLOpsText_2">
+          <widget class="QTextEdit" name="te_psOps">
            <property name="placeholderText">
             <string>Please input the operations that needs to be done if the check is failed.</string>
            </property>
@@ -697,7 +697,7 @@
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="text">
-            <string>Scripts</string>
+            <string>Python Scripts</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -55,6 +55,16 @@ class ModifyItem(AddItem):
             self.ui.MBackgroundText.setText(self.background)
             self.ui.MCheckProcessText.setText(self.check[0])
             self.ui.MOpsText.setText(self.operations)
+        elif self.type == 'Powershell':
+            self.ui.PSBackgroundText.setText(self.background)
+            self.ui.te_psScript.setText(self.check[0])
+            self.ui.te_checkPSOutput.setText(self.check[1])
+            self.ui.te_psOps.setText(self.operations)
+        elif self.type == 'Python':
+            self.ui.PyBackgroundText.setText(self.background)
+            self.ui.te_pyScript.setText(self.check[0])
+            self.ui.te_checkPyOutput.setText(self.check[1])
+            self.ui.te_pyOps.setText(self.operations)
 
     def save_2_file(self):
         # self.itemname = self.ui.itemNameLine.text()

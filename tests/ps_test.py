@@ -5,7 +5,7 @@ import subprocess as sp
 
 class PowerShell:
     # from scapy
-    def __init__(self, coding, ):
+    def __init__(self, coding=None, ):
         cmd = [self._where('PowerShell.exe'),
                "-NoLogo", "-NonInteractive",  # Do not print headers
                "-Command", "-"]  # Listen commands from stdin
@@ -51,8 +51,9 @@ class PowerShell:
 
 if __name__ == '__main__':
     # Example:
+    cmd = 'ping baidu.com\nls'
     with PowerShell('GBK') as ps:
-        outs, errs = ps.run('ping baidu.com')
+        outs, errs = ps.run(cmd)
     print('1')
     print('error:', os.linesep, errs)
     print('2')
