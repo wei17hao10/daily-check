@@ -1,4 +1,5 @@
 import re
+import os
 from PyQt5 import uic
 from core.share import SI, ItemMgt
 from PyQt5.QtWidgets import QMessageBox
@@ -6,13 +7,14 @@ from datetime import datetime
 import pymssql
 from core.display_result import DisplaySQLResult
 from core.powershell import PowerShell
+from runpy import run_path
 
 
 class AddItem:
     def __init__(self):
         self.ui = uic.loadUi("./UI/additemwidget.ui")
         self.background = ''
-        self.check = ['', '0']
+        self.check = ['', '']
         self.obcondition = ''
         self.jbqcondition = ''
         self.operations = ''
@@ -24,37 +26,69 @@ class AddItem:
         self.conn = None
         self.fields = []
         self.rows = []
+        self.output = ''
 
         # self.ui.lineThreshold.setText(self.check[1])
         self.ui.itemTypeCombo.addItems(SI.ITEM_TYPE)
         self.ui.itemTypeCombo.currentIndexChanged.connect(self.handle_selection_change)
+        self.ui.lineThreshold.setText('0')
+
         self.ui.btn_OK.clicked.connect(self.ok_clicked)
         self.ui.btn_cancel.clicked.connect(self.cancel_clicked)
         self.ui.btn_execute.clicked.connect(self.execute_sql)
-        self.ui.btn_checkres.clicked.connect(self.display_result)
-        self.ui.lineThreshold.setText(self.check[1])
+        self.ui.btn_checksqlres.clicked.connect(self.display_result)
         self.ui.btn_exeps.clicked.connect(self.execute_ps)
-        self.ui.btn_checkpsres.clicked.connect(self.check_ps_result)
+        self.ui.btn_checkpsout.clicked.connect(self.check_result)
         self.ui.btn_exepy.clicked.connect(self.execute_py)
-        self.ui.btn_checkpyres.clicked.connect(self.check_py_result)
+        self.ui.btn_checkpyout.clicked.connect(self.check_result)
 
     def execute_ps(self):
-        ps_cmd = self.ui.te_psScript.toPlainText()
-        print(ps_cmd)
-        with PowerShell('GBK') as ps:
-            print('in ps')
-            outs, errs = ps.run(ps_cmd)
-        res = 'Output:\n' + outs
-        print(res)
-        QMessageBox.information(self.ui, 'Powershell result', res, QMessageBox.Close)
+        msgBox = QMessageBox(self.ui)
+        msgBox.setWindowTitle("Executing...")
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("The powershell script is executing, please wait.")
+        msgBox.show()
 
-    def check_ps_result(self):
-        pass
+        ps_cmd = self.ui.te_psScript.toPlainText()
+        # print(ps_cmd)
+        with PowerShell('GBK') as ps:
+            outs, errs = ps.run(ps_cmd)
+        outs = str(outs)
+        errs = str(errs)
+        self.output = 'Output:\n' + outs + '\nErrors:\n' + errs
+
+        msgBox.setWindowTitle("Result")
+        msgBox.setText(self.output)
+
+    def check_result(self):
+        if len(self.output.strip()) == 0:
+            QMessageBox.warning(self.ui, 'Warning', 'No output, please execute script first.')
+            return
+
+        self.save_check_script()
+        script_dir = 'Checks/pyscripts/check_result'
+        script_file = self.itemname + '.py'
+        script_path = os.path.join(script_dir, script_file)
+        result = {}
+
+        if os.path.exists(script_path):
+            check_params = {'output': self.output}
+            try:
+                result = run_path(path_name=script_path, init_globals=check_params)
+            except:
+                QMessageBox.warning(self.ui, 'warning', 'Script execution failed, please check!')
+            if 'isPass' in result:
+                if isinstance(result['isPass'], bool):
+                    info = 'Result: isPass = ' + str(result['isPass'])
+                    QMessageBox.information(self.ui, 'Info', info)
+                else:
+                    QMessageBox.warning(self.ui, 'warning', 'isPass is not boolean!')
+            else:
+                QMessageBox.warning(self.ui, 'warning', 'isPass is not defined!')
+        else:
+            QMessageBox.information(self.ui, 'Info', 'The check output script is not defined')
 
     def execute_py(self):
-        pass
-
-    def check_py_result(self):
         pass
 
     def execute_sql(self):
@@ -90,6 +124,8 @@ class AddItem:
             self.check[0] = self.ui.checkSQLText.toPlainText()
             self.check[1] = self.ui.lineThreshold.text()
             self.operations = self.ui.SQLOpsText.toPlainText()
+            self.obcondition = self.ui.OBText.toPlainText()
+            self.jbqcondition = self.ui.JBQText.toPlainText()
             # print('after ops')
             if len(self.background.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
@@ -182,6 +218,30 @@ class AddItem:
                         'SortOrder': '9'
                         }
         ItemMgt.save_new_item(checkcontent)
+        self.save_check_script()
+
+    def save_check_script(self):
+        script = self.check[1]
+        script_dir = 'Checks/pyscripts/check_result'
+        script_file = self.itemname + '.py'
+        script_path = os.path.join(script_dir, script_file)
+
+        def save_script():
+            s_file = open(script_path, 'w')
+            s_file.write(script)
+            s_file.close()
+
+        if os.path.exists(script_path):
+            file = open(script_path, 'r')
+            file_read = file.read()
+            file.close()
+            if file_read != script and len(script.strip()) > 0:
+                save_script()
+            elif len(script.strip()) == 0:
+                os.remove(script_path)
+        else:
+            if len(script.strip()) > 0:
+                save_script()
 
     def ok_clicked(self):
         if self.check_name() and self.check_text():

@@ -30,13 +30,13 @@ class SingleCheckResult:
 
         self.timer_interval = 3000
         self.sql_timer = QTimer()
-        self.sql_timer.timeout.connect(lambda: self.ui.btn_SQL.setText("SQL"))
+        self.sql_timer.timeout.connect(self.on_sqltimer_timeout)
 
         self.ob_timer = QTimer()
-        self.ob_timer.timeout.connect(lambda: self.ui.btn_ob.setText("OB condition"))
+        self.ob_timer.timeout.connect(self.on_obtimer_timeout)
 
         self.jq_timer = QTimer()
-        self.jq_timer.timeout.connect(lambda: self.ui.btn_jobq.setText("JobQ condition"))
+        self.jq_timer.timeout.connect(self.on_jqtimer_timeout)
 
         self.namelist = [item[2] for item in SI.itemDF[SI.itemDF['status'] == 'active'].values]
         self.btn_style = {
@@ -210,10 +210,16 @@ class SingleCheckResult:
             return
         cpb.copy(self.check_sql)
         # QMessageBox.information(self.ui, 'Info', 'SQL is copied.')
-        self.sql_timer.stop()
+        if self.sql_timer.isActive():
+            self.sql_timer.stop()
 
         self.ui.btn_SQL.setText("SQL copied")
         self.sql_timer.start(self.timer_interval)
+
+    def on_sqltimer_timeout(self):
+        if self.sql_timer.isActive():
+            self.sql_timer.stop()
+        self.ui.btn_SQL.setText("SQL")
 
     def click_ob(self):
         if len(self.ob_condition.strip()) == 0:
@@ -226,6 +232,11 @@ class SingleCheckResult:
         self.ui.btn_ob.setText("OB condition copied")
         self.ob_timer.start(self.timer_interval)
 
+    def on_obtimer_timeout(self):
+        if self.ob_timer.isActive():
+            self.ob_timer.stop()
+        self.ui.btn_ob.setText("OB condition")
+
     def click_jobq(self):
         if len(self.jobq_condition.strip()) == 0:
             return
@@ -236,6 +247,11 @@ class SingleCheckResult:
 
         self.ui.btn_jobq.setText("JobQ condition copied")
         self.jq_timer.start(self.timer_interval)
+
+    def on_jqtimer_timeout(self):
+        if self.jq_timer.isActive():
+            self.jq_timer.stop()
+        self.ui.btn_jobq.setText("JobQ condition")
 
     def click_last(self):
         this_comment = self.ui.textComments.toPlainText()

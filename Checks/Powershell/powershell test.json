@@ -1,0 +1,18 @@
+{
+    "CheckName": "powershell test",
+    "Status": "active",
+    "Type": "Powershell",
+    "Background": "test powershell ..",
+    "CheckContent": [
+        "ping taobao.com\n",
+        "print('yes')\n\t"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "steps 1",
+    "CreatedBy": "Hao",
+    "CreatedDate": "2023-05-25",
+    "UpdatedBy": "Hao",
+    "UpdatedDate": "2023-05-29",
+    "SortOrder": "9"
+}

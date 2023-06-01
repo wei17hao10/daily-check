@@ -20,11 +20,23 @@ class ModifyItem(AddItem):
         self.ui.checkSQLText.textChanged.connect(self.content_changed)
         self.ui.lineThreshold.textChanged.connect(self.content_changed)
         self.ui.SQLOpsText.textChanged.connect(self.content_changed)
+        self.ui.JBQText.textChanged.connect(self.content_changed)
+        self.ui.OBText.textChanged.connect(self.content_changed)
+
         self.ui.MBackgroundText.textChanged.connect(self.content_changed)
         self.ui.MCheckProcessText.textChanged.connect(self.content_changed)
         self.ui.MOpsText.textChanged.connect(self.content_changed)
-        self.ui.JBQText.textChanged.connect(self.content_changed)
-        self.ui.OBText.textChanged.connect(self.content_changed)
+
+        self.ui.PSBackgroundText.textChanged.connect(self.content_changed)
+        self.ui.te_psScript.textChanged.connect(self.content_changed)
+        self.ui.te_checkPSOutput.textChanged.connect(self.content_changed)
+        self.ui.te_psOps.textChanged.connect(self.content_changed)
+
+        self.ui.PyBackgroundText.textChanged.connect(self.content_changed)
+        self.ui.te_pyScript.textChanged.connect(self.content_changed)
+        self.ui.te_checkPyOutput.textChanged.connect(self.content_changed)
+        self.ui.te_pyOps.textChanged.connect(self.content_changed)
+
 
     def load_item(self):
         self.itemname = self.item.itemname
@@ -72,8 +84,8 @@ class ModifyItem(AddItem):
             # self.background = self.ui.SQLBackgroundText.toPlainText() if self.type == 'SQL' else self.ui.MBackgroundText.toPlainText()
             # self.check[0] = self.ui.checkSQLText.toPlainText() if self.type == 'SQL' else self.ui.MCheckProcessText.toPlainText()
             # self.operations = self.ui.SQLOpsText.toPlainText() if self.type == 'SQL' else self.ui.MOpsText.toPlainText()
-            self.obcondition = self.ui.OBText.toPlainText()
-            self.jbqcondition = self.ui.JBQText.toPlainText()
+            # self.obcondition = self.ui.OBText.toPlainText()
+            # self.jbqcondition = self.ui.JBQText.toPlainText()
 
             self.item.update_background(self.background)
             self.item.update_check(self.check)
@@ -83,6 +95,7 @@ class ModifyItem(AddItem):
             self.item.update_info(self.updatedBy, self.updatedDate)
             self.item.save_check_item()
             self.updatedFlag = 0
+            self.save_check_script()
 
     def content_changed(self):
         self.updatedFlag = 1

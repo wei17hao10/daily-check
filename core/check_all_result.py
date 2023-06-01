@@ -8,6 +8,8 @@ from PyQt5.QtCore import Qt
 from threading import Thread
 from time import sleep
 from core.single_check import SingleCheckResult
+from core.powershell import PowerShell
+from runpy import run_path
 
 
 class CheckAllResult:
@@ -129,10 +131,29 @@ class CheckAllResult:
                 check_result = 'auto pass'
                 comment = check_result
                 display_res = ['executed', 'pass', check_result]
-            elif rowlen > 0:
+            elif rowlen > int(si_item.check[1]):
                 display_res = ['executed', 'fail', check_result]
             elif rowlen == -1:
                 display_res = ['SQL issue', '-', check_result]
+        elif si_item.type == 'Powershell':
+            ps_cmd = self.ui.te_psScript.toPlainText()
+            # print(ps_cmd)
+            with PowerShell('GBK') as ps:
+                outs, errs = ps.run(ps_cmd)
+            outs = str(outs)
+            errs = str(errs)
+            res = 'Output:\n' + outs + '\nErrors:\n' + errs
+
+            if self.validate_result(res, si_item):
+                check_result = 'auto pass'
+                comment = check_result
+                display_res = ['executed', 'pass', check_result]
+            else:
+                rowlen = -1
+                display_res = ['executed', 'fail', check_result]
+
+        elif si_item.type == 'Python':
+            pass
 
         # self.es.update_execution_result.emit(item, display_res)
         SI.globalSignal.update_execution_result.emit(item, display_res)
@@ -142,6 +163,9 @@ class CheckAllResult:
                                    "count": rowlen,
                                    "comment": comment,
                                    "check_result": display_res})
+
+    def validate_result(self, output, si_item):
+        return False
 
     def execute_sql(self, sql):
         cursor = self.conn.cursor()
