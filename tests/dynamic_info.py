@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+
 class Widget(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -23,7 +24,6 @@ class Widget(QWidget):
         if self.timer.isActive():
             print('time is active')
             self.timer.stop()
-
 
 
 if __name__ == '__main__':

@@ -43,14 +43,18 @@ class AddItem:
         self.ui.btn_checkpyout.clicked.connect(self.check_result)
 
     def execute_ps(self):
+        ps_cmd = self.ui.te_psScript.toPlainText()
+        self.check[0] = ps_cmd
+        if len(self.check[0].strip()) == 0:
+            QMessageBox.warning(self.ui, 'warning', 'The powershell script should not be empty.')
+            return
+        # print(ps_cmd)
         msgBox = QMessageBox(self.ui)
         msgBox.setWindowTitle("Executing...")
         msgBox.setIcon(QMessageBox.Information)
         msgBox.setText("The powershell script is executing, please wait.")
         msgBox.show()
 
-        ps_cmd = self.ui.te_psScript.toPlainText()
-        # print(ps_cmd)
         with PowerShell('GBK') as ps:
             outs, errs = ps.run(ps_cmd)
         outs = str(outs)
@@ -63,6 +67,13 @@ class AddItem:
     def check_result(self):
         if len(self.output.strip()) == 0:
             QMessageBox.warning(self.ui, 'Warning', 'No output, please execute script first.')
+            return
+
+        if self.type == 'Powershell':
+            self.check[1] = self.ui.te_checkPSOutput.toPlainText()
+        elif self.type == 'Python':
+            self.check[1] = self.ui.te_checkPyOutput.toPlainText()
+        else:
             return
 
         self.save_check_script()
@@ -89,7 +100,65 @@ class AddItem:
             QMessageBox.information(self.ui, 'Info', 'The check output script is not defined')
 
     def execute_py(self):
-        pass
+        self.check[0] = self.ui.te_pyScript.toPlainText()
+        if len(self.check[0].strip()) == 0:
+            QMessageBox.warning(self.ui, 'warning', 'The python script should not be empty.')
+            return
+        self.save_py_script()
+        script_dir = 'Checks/pyscripts/execute'
+        script_file = self.itemname + '.py'
+        script_path = os.path.join(script_dir, script_file)
+
+        msg_box = QMessageBox(self.ui)
+        msg_box.setWindowTitle("Executing...")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("The python script is executing, please wait.")
+        msg_box.show()
+
+        try:
+            result = run_path(path_name=script_path)
+        except:
+            # QMessageBox.warning(self.ui, 'warning', 'Script execution failed, please check!')
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setWindowTitle("Warning")
+            msg_box.setText('Script execution failed, please check!')
+            return
+
+        if 'output' in result:
+            if isinstance(result['output'], str):
+                self.output = result['output']
+                msg_box.setWindowTitle("Result")
+                msg_box.setText(self.output)
+            else:
+                # QMessageBox.warning(self.ui, 'warning', 'isPass is not boolean!')
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setWindowTitle("Warning")
+                msg_box.setText('output is not string, please check!')
+        else:
+            # QMessageBox.warning(self.ui, 'warning', 'isPass is not defined!')
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setWindowTitle("Warning")
+            msg_box.setText('output is not defined, please check!')
+
+    def save_py_script(self):
+        script = self.check[0]
+        script_dir = 'Checks/pyscripts/execute'
+        script_file = self.itemname + '.py'
+        script_path = os.path.join(script_dir, script_file)
+
+        def save_script():
+            s_file = open(script_path, 'w')
+            s_file.write(script)
+            s_file.close()
+
+        if os.path.exists(script_path):
+            file = open(script_path, 'r')
+            file_read = file.read()
+            file.close()
+            if file_read != script:
+                save_script()
+        else:
+            save_script()
 
     def execute_sql(self):
         self.create_db_conn()
@@ -167,7 +236,7 @@ class AddItem:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
                 return False
             elif len(self.check[0].strip()) == 0:
-                QMessageBox.warning(self.ui, 'Warning', 'Please Powershell script.')
+                QMessageBox.warning(self.ui, 'Warning', 'Please input Powershell script.')
                 return False
             elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
@@ -184,7 +253,7 @@ class AddItem:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
                 return False
             elif len(self.check[0].strip()) == 0:
-                QMessageBox.warning(self.ui, 'Warning', 'Please Python script.')
+                QMessageBox.warning(self.ui, 'Warning', 'Please input Python script.')
                 return False
             elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')

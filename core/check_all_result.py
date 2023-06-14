@@ -6,10 +6,11 @@ import pymssql
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtCore import Qt
 from threading import Thread
-from time import sleep
+from time import sleep, timezone
 from core.single_check import SingleCheckResult
 from core.powershell import PowerShell
 from runpy import run_path
+import os
 
 
 class CheckAllResult:
@@ -81,12 +82,15 @@ class CheckAllResult:
     def execute_all(self):
         self.load_items()
         self.check_content = []
-        self.check_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # self.check_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.check_time = datetime.fromtimestamp(datetime.now().timestamp() + timezone).strftime('%Y-%m-%d %H:%M:%S')
+
         self.ui.lineUser.setReadOnly(True)
         self.ui.lineUser.setText(SI.user)
 
+        local_time = datetime.fromtimestamp(datetime.strptime(self.check_time, '%Y-%m-%d %H:%M:%S').timestamp() - timezone).strftime('%Y-%m-%d %H:%M:%S')
         self.ui.lineStart.setReadOnly(True)
-        self.ui.lineStart.setText(self.check_time)
+        self.ui.lineStart.setText(local_time)
 
         t = Thread(target=self.execute_all_t)
         t.start()
@@ -153,7 +157,24 @@ class CheckAllResult:
                 display_res = ['executed', 'fail', check_result]
 
         elif si_item.type == 'Python':
-            pass
+            script_dir = 'Checks/pyscripts/execute'
+            script_file = item_name + '.py'
+            script_path = os.path.join(script_dir, script_file)
+            result = {}
+
+            try:
+                result = run_path(path_name=script_path)
+            except:
+                rowlen = -1
+                display_res = ['executed', 'fail', check_result]
+
+            if self.validate_result(result['output'], si_item):
+                check_result = 'auto pass'
+                comment = check_result
+                display_res = ['executed', 'pass', check_result]
+            else:
+                rowlen = -1
+                display_res = ['executed', 'fail', check_result]
 
         # self.es.update_execution_result.emit(item, display_res)
         SI.globalSignal.update_execution_result.emit(item, display_res)
@@ -165,7 +186,27 @@ class CheckAllResult:
                                    "check_result": display_res})
 
     def validate_result(self, output, si_item):
-        return False
+        script_dir = 'Checks/pyscripts/check_result'
+        script_file = si_item.itemname + '.py'
+        script_path = os.path.join(script_dir, script_file)
+        result = {}
+
+        if os.path.exists(script_path):
+            check_params = {'output': output}
+            try:
+                result = run_path(path_name=script_path, init_globals=check_params)
+            except:
+                QMessageBox.warning(self.ui, 'warning', 'Script execution failed, please check!')
+
+            if 'isPass' in result:
+                if isinstance(result['isPass'], bool):
+                    return result['isPass']
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
 
     def execute_sql(self, sql):
         cursor = self.conn.cursor()
@@ -251,14 +292,18 @@ class CheckAllResult:
         # if not self.execute_flag and SI.ChecksToday == {}:
         if not self.execute_flag:
             curr_file = self.ui.cbox_history.currentText()
-            user = curr_file.split()[-1]
+            user = curr_file.split('-')[-1]
             if CheckResult.load_today_check(user):
                 self.check_content = SI.ChecksToday["check_content"]
                 CheckResult.load_result()
                 self.ui.lineUser.setReadOnly(True)
                 self.ui.lineUser.setText(SI.ChecksToday["check_user"])
+
                 self.ui.lineStart.setReadOnly(True)
-                self.ui.lineStart.setText(SI.ChecksToday["check_date"])
+                local_time = datetime.fromtimestamp(
+                    datetime.strptime(SI.ChecksToday["check_date"], '%Y-%m-%d %H:%M:%S').timestamp() - timezone).strftime(
+                    '%Y-%m-%d %H:%M:%S')
+                self.ui.lineStart.setText(local_time)
                 self.update_tree()
 
                 self.execute_flag = True

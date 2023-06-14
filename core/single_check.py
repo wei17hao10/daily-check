@@ -5,6 +5,9 @@ from core.display_result import DisplaySQLResult
 import pymssql
 import pyperclip as cpb
 from PyQt5.QtCore import QTimer
+from core.powershell import PowerShell
+from runpy import run_path
+import os
 
 
 class SingleCheckResult:
@@ -16,7 +19,7 @@ class SingleCheckResult:
 
         self.current_check = current_check
         self.conn = None
-        self.check_sql = ''
+        self.check_cmd = ''
         self.ob_condition = ''
         self.jobq_condition = ''
         self.fields = []
@@ -25,6 +28,7 @@ class SingleCheckResult:
         self.day2comment = ''
         self.day3comment = ''
         self.check_name = self.current_check["check_name"]
+        self.item_type = self.current_check["item_type"]
         self.single_exe_flag = False
         self.is_hide_pass: bool = is_hide_pass
 
@@ -45,7 +49,7 @@ class SingleCheckResult:
             "blue":     '''QPushButton{color: #4a86e8;font-size:14px;}'''
         }
         # self.grey_style = '''QPushButton{color:rgb(180,180,180);}'''
-        self.ui.btn_check.clicked.connect(self.execute_sql)
+        self.ui.btn_check.clicked.connect(self.execute)
         self.ui.btn_result.clicked.connect(self.show_result)
         self.ui.btn_SQL.clicked.connect(self.click_sql)
         self.ui.btn_ob.clicked.connect(self.click_ob)
@@ -59,7 +63,7 @@ class SingleCheckResult:
         self.ui.btn_cpcomment.clicked.connect(self.copy_comment)
         self.ui.btn_clrformat.clicked.connect(self.clear_format)
         self.text_format = self.ui.textComments.currentCharFormat()
-        print(self.text_format)
+        # print(self.text_format)
         # self.ui.textComments.textChanged.connect(self.my_close)
         # SI.globalSignal.close_further_check.connect(self.on_close)
 
@@ -70,7 +74,7 @@ class SingleCheckResult:
     def init_again(self, current_check):
         self.current_check = current_check
         # self.conn = None
-        self.check_sql = ''
+        self.check_cmd = ''
         self.ob_condition = ''
         self.jobq_condition = ''
         self.fields = []
@@ -79,6 +83,7 @@ class SingleCheckResult:
         self.day2comment = ''
         self.day3comment = ''
         self.check_name = self.current_check["check_name"]
+        self.item_type = self.current_check["item_type"]
         self.single_exe_flag = False
         # 继续编写初始化内容
         self.load_data()
@@ -91,7 +96,7 @@ class SingleCheckResult:
         updated_by = item.updatedBy
         background = item.background
         operations = item.operations
-        self.check_sql = item.check[0]
+        self.check_cmd = item.check[0]
         self.ob_condition = item.obcondition
         self.jobq_condition = item.jbqcondition
 
@@ -124,7 +129,7 @@ class SingleCheckResult:
         self.ui.btn_check.setStyleSheet(self.btn_style["black"])
         self.ui.btn_result.setStyleSheet(self.btn_style["black"])
 
-        if len(self.check_sql.strip()) > 0 and item.type == 'SQL':
+        if len(self.check_cmd.strip()) > 0 and item.type == 'SQL':
             self.ui.btn_SQL.setStyleSheet(self.btn_style["black"])
         else:
             self.ui.btn_SQL.setStyleSheet(self.btn_style["grey"])
@@ -168,6 +173,68 @@ class SingleCheckResult:
 
         self.click_previous_1()
 
+    def execute(self):
+        if self.item_type == 'SQL':
+            self.execute_sql()
+        elif self.item_type == 'Powershell':
+            self.execute_ps()
+        elif self.item_type == 'Python':
+            self.execute_py()
+        else:
+            pass
+
+    def execute_py(self):
+        script_dir = 'Checks/pyscripts/execute'
+        script_file = self.check_name + '.py'
+        script_path = os.path.join(script_dir, script_file)
+
+        msg_box = QMessageBox(self.ui)
+        msg_box.setWindowTitle("Executing...")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("The python script is executing, please wait.")
+        msg_box.show()
+
+        try:
+            result = run_path(path_name=script_path)
+        except:
+            # QMessageBox.warning(self.ui, 'warning', 'Script execution failed, please check!')
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setWindowTitle("Warning")
+            msg_box.setText('Script execution failed, please check!')
+            return
+
+        if 'output' in result:
+            if isinstance(result['output'], str):
+                output = result['output']
+                msg_box.setWindowTitle("Result")
+                msg_box.setText(output)
+            else:
+                # QMessageBox.warning(self.ui, 'warning', 'isPass is not boolean!')
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setWindowTitle("Warning")
+                msg_box.setText('output is not string, please check!')
+        else:
+            # QMessageBox.warning(self.ui, 'warning', 'isPass is not defined!')
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setWindowTitle("Warning")
+            msg_box.setText('output is not defined, please check!')
+
+    def execute_ps(self):
+        msg_box = QMessageBox(self.ui)
+        msg_box.setWindowTitle("Executing...")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("The powershell script is executing, please wait.")
+        msg_box.show()
+
+        with PowerShell('GBK') as ps:
+            outs, errs = ps.run(self.check_cmd)
+        outs = str(outs)
+        errs = str(errs)
+        output = 'Output:\n' + outs + '\nErrors:\n' + errs
+
+        msg_box.setWindowTitle("Result")
+        msg_box.setText(output)
+
     def execute_sql(self):
         if self.single_exe_flag:
             return
@@ -177,7 +244,7 @@ class SingleCheckResult:
         self.single_exe_flag = True
         self.update_btn_color()
         try:
-            cursor.execute(self.check_sql)
+            cursor.execute(self.check_cmd)
             self.fields = [field[0] for field in cursor.description]
             self.rows = cursor.fetchall()
         except pymssql.ProgrammingError:
@@ -206,9 +273,9 @@ class SingleCheckResult:
             tab.ui.exec_()
 
     def click_sql(self):
-        if len(self.check_sql.strip()) == 0 or self.current_check["item_type"] != 'SQL':
+        if len(self.check_cmd.strip()) == 0 or self.current_check["item_type"] != 'SQL':
             return
-        cpb.copy(self.check_sql)
+        cpb.copy(self.check_cmd)
         # QMessageBox.information(self.ui, 'Info', 'SQL is copied.')
         if self.sql_timer.isActive():
             self.sql_timer.stop()
