@@ -8,6 +8,7 @@ import pymssql
 from core.display_result import DisplaySQLResult
 from core.powershell import PowerShell
 from runpy import run_path
+from PyQt5.QtCore import Qt
 
 
 class AddItem:
@@ -49,11 +50,11 @@ class AddItem:
             QMessageBox.warning(self.ui, 'warning', 'The powershell script should not be empty.')
             return
         # print(ps_cmd)
-        msgBox = QMessageBox(self.ui)
-        msgBox.setWindowTitle("Executing...")
-        msgBox.setIcon(QMessageBox.Information)
-        msgBox.setText("The powershell script is executing, please wait.")
-        msgBox.show()
+        msg_box = QMessageBox(self.ui)
+        msg_box.setWindowTitle("Executing...")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("The powershell script is executing, please wait.")
+        msg_box.show()
 
         with PowerShell('GBK') as ps:
             outs, errs = ps.run(ps_cmd)
@@ -61,8 +62,9 @@ class AddItem:
         errs = str(errs)
         self.output = 'Output:\n' + outs + '\nErrors:\n' + errs
 
-        msgBox.setWindowTitle("Result")
-        msgBox.setText(self.output)
+        msg_box.setWindowTitle("Result")
+        msg_box.setText(self.output)
+        msg_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
     def check_result(self):
         if len(self.output.strip()) == 0:
@@ -76,8 +78,9 @@ class AddItem:
         else:
             return
 
+        self.itemname = self.ui.itemNameLine.text()
         self.save_check_script()
-        script_dir = 'Checks/pyscripts/check_result'
+        script_dir = 'Checks/pyscripts/check_output'
         script_file = self.itemname + '.py'
         script_path = os.path.join(script_dir, script_file)
         result = {}
@@ -100,6 +103,7 @@ class AddItem:
             QMessageBox.information(self.ui, 'Info', 'The check output script is not defined')
 
     def execute_py(self):
+        self.itemname = self.ui.itemNameLine.text()
         self.check[0] = self.ui.te_pyScript.toPlainText()
         if len(self.check[0].strip()) == 0:
             QMessageBox.warning(self.ui, 'warning', 'The python script should not be empty.')
@@ -129,6 +133,7 @@ class AddItem:
                 self.output = result['output']
                 msg_box.setWindowTitle("Result")
                 msg_box.setText(self.output)
+                msg_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             else:
                 # QMessageBox.warning(self.ui, 'warning', 'isPass is not boolean!')
                 msg_box.setIcon(QMessageBox.Warning)
@@ -291,7 +296,7 @@ class AddItem:
 
     def save_check_script(self):
         script = self.check[1]
-        script_dir = 'Checks/pyscripts/check_result'
+        script_dir = 'Checks/pyscripts/check_output'
         script_file = self.itemname + '.py'
         script_path = os.path.join(script_dir, script_file)
 

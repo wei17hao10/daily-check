@@ -140,7 +140,7 @@ class CheckAllResult:
             elif rowlen == -1:
                 display_res = ['SQL issue', '-', check_result]
         elif si_item.type == 'Powershell':
-            ps_cmd = self.ui.te_psScript.toPlainText()
+            ps_cmd = si_item.check[0]
             # print(ps_cmd)
             with PowerShell('GBK') as ps:
                 outs, errs = ps.run(ps_cmd)
@@ -160,13 +160,13 @@ class CheckAllResult:
             script_dir = 'Checks/pyscripts/execute'
             script_file = item_name + '.py'
             script_path = os.path.join(script_dir, script_file)
-            result = {}
 
             try:
                 result = run_path(path_name=script_path)
             except:
                 rowlen = -1
                 display_res = ['executed', 'fail', check_result]
+                return
 
             if self.validate_result(result['output'], si_item):
                 check_result = 'auto pass'
@@ -186,7 +186,7 @@ class CheckAllResult:
                                    "check_result": display_res})
 
     def validate_result(self, output, si_item):
-        script_dir = 'Checks/pyscripts/check_result'
+        script_dir = 'Checks/pyscripts/check_output'
         script_file = si_item.itemname + '.py'
         script_path = os.path.join(script_dir, script_file)
         result = {}

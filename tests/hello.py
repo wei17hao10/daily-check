@@ -1,4 +1,4 @@
-print('hello')
-print(output)
-res = True
-val = 1
+isPass = True
+for i in output.split('\n'):
+    if "NOK" in i:
+        isPass = False

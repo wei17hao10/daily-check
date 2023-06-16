@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 from core.display_result import DisplaySQLResult
 import pymssql
 import pyperclip as cpb
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from core.powershell import PowerShell
 from runpy import run_path
 import os
@@ -234,6 +234,7 @@ class SingleCheckResult:
 
         msg_box.setWindowTitle("Result")
         msg_box.setText(output)
+        msg_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
     def execute_sql(self):
         if self.single_exe_flag:
