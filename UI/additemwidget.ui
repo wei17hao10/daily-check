@@ -525,7 +525,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,0,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,0,0">
          <item>
           <widget class="QLabel" name="label_16">
            <property name="sizePolicy">
@@ -558,35 +558,49 @@
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="te_psScript">
-           <property name="placeholderText">
-            <string>(Mandatory) Please input powershell script</string>
+          <widget class="QGroupBox" name="verticalGroupBox">
+           <property name="title">
+            <string>Execution Powershell script</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QTextEdit" name="te_psScript">
+              <property name="placeholderText">
+               <string>(Mandatory) Please input powershell script;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_exeps">
+              <property name="text">
+               <string>Execute PS</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,1">
-           <item>
-            <widget class="QPushButton" name="btn_exeps">
-             <property name="text">
-              <string>Execute PS</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btn_checkpsout">
-             <property name="text">
-              <string>Check Output</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="te_checkPSOutput">
-           <property name="placeholderText">
-            <string>(Optional) Please input result checking function with Python</string>
+          <widget class="QGroupBox" name="verticalGroupBox_2">
+           <property name="title">
+            <string>Result checking Python script</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_13">
+            <item>
+             <widget class="QTextEdit" name="te_checkPSOutput">
+              <property name="placeholderText">
+               <string>(Optional) Please input result checking function with Python; &quot;output&quot; is the result of left script; &quot;isPass&quot; must be defined;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_checkpsout">
+              <property name="text">
+               <string>Check Output</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -674,7 +688,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1,0,0,0">
+        <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1,0,0">
          <item>
           <widget class="QLabel" name="label_18">
            <property name="sizePolicy">
@@ -707,35 +721,49 @@
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="te_pyScript">
-           <property name="placeholderText">
-            <string>Please input python commands</string>
+          <widget class="QGroupBox" name="verticalGroupBox">
+           <property name="title">
+            <string>Execution Python script</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <item>
+             <widget class="QTextEdit" name="te_pyScript">
+              <property name="placeholderText">
+               <string>(Mandatory) Please input python script here; &quot;output&quot; is result string, must be defined;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_exepy">
+              <property name="text">
+               <string>Execute Py</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,1">
-           <item>
-            <widget class="QPushButton" name="btn_exepy">
-             <property name="text">
-              <string>Execute Py</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btn_checkpyout">
-             <property name="text">
-              <string>Check Output</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="te_checkPyOutput">
-           <property name="placeholderText">
-            <string>Please input result checking function with Python</string>
+          <widget class="QGroupBox" name="verticalGroupBox_2">
+           <property name="title">
+            <string>Result checking Python script</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <widget class="QTextEdit" name="te_checkPyOutput">
+              <property name="placeholderText">
+               <string>(Optional) Please input result checking function with Python; &quot;output&quot; is the result of left script; &quot;isPass&quot; must be defined;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_checkpyout">
+              <property name="text">
+               <string>Check Output</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
