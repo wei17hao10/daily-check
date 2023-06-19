@@ -51,10 +51,16 @@ class PowerShell:
 
 if __name__ == '__main__':
     # Example:
-    cmd = 'ping baidu.com\nls'
-    with PowerShell('GBK') as ps:
-        outs, errs = ps.run(cmd)
+    cmd = 'ping taobao.com'
+    errs = ''
+    outs = ''
+    try:
+        with PowerShell('UTF-8') as ps:
+            outs, errs = ps.run(cmd)
+    except BaseException as e:
+        print(e)
+
     print('1')
-    print('error:', os.linesep, errs)
+    print('error:', os.linesep, str(errs))
     print('2')
-    print('output:', os.linesep, outs)
+    print('output:', os.linesep, str(outs))

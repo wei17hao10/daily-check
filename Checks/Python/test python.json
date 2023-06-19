@@ -1,0 +1,18 @@
+{
+    "CheckName": "test python",
+    "Status": "active",
+    "Type": "Python",
+    "Background": "test py",
+    "CheckContent": [
+        "import os\nsource_dir = 'C:\\\\Users\\\\WEIHAO\\\\PycharmProjects\\\\daily-check\\\\UI'\nfilter_str = '.ui'\noutput = ''\nfiles = os.listdir(source_dir)\nfiles = [f for f in files if filter_str in f]\nfor f in files:\n    size = os.path.getsize(os.path.join(source_dir, f))\n    if size < 5 * 1024:\n        output = output + '\\n' + f'small file: {f}'\n",
+        ""
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "operations",
+    "CreatedBy": "Hao",
+    "CreatedDate": "2023-06-15",
+    "UpdatedBy": "Hao",
+    "UpdatedDate": "2023-06-15",
+    "SortOrder": "9"
+}

@@ -226,7 +226,7 @@ class SingleCheckResult:
         msg_box.setText("The powershell script is executing, please wait.")
         msg_box.show()
 
-        with PowerShell('GBK') as ps:
+        with PowerShell() as ps:
             outs, errs = ps.run(self.check_cmd)
         outs = str(outs)
         errs = str(errs)
@@ -348,6 +348,7 @@ class SingleCheckResult:
             QMessageBox.warning(self.ui, 'Warning', 'Operation Comments can not be empty.')
         else:
             self.update_comment()
+            SI.globalSignal.update_check_all.emit(self.current_check)
 
             nlistlen = len(self.namelist)
             i = self.namelist.index(self.check_name)
@@ -373,7 +374,7 @@ class SingleCheckResult:
             self.close_db_conn()
             CheckResult.save_result()
             self.ui.close()
-            SI.globalSignal.update_check_all.emit(True)
+            SI.globalSignal.update_check_all.emit(self.current_check)
             SI.mainWin.ui.hide()
             SI.mainWin.ui.show()
 

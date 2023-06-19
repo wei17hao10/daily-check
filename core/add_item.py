@@ -55,9 +55,11 @@ class AddItem:
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setText("The powershell script is executing, please wait.")
         msg_box.show()
-
-        with PowerShell('GBK') as ps:
-            outs, errs = ps.run(ps_cmd)
+        try:
+            with PowerShell() as ps:
+                outs, errs = ps.run(ps_cmd)
+        except:
+            errs = 'Powershell module execution error'
         outs = str(outs)
         errs = str(errs)
         self.output = 'Output:\n' + outs + '\nErrors:\n' + errs
@@ -71,6 +73,7 @@ class AddItem:
             QMessageBox.warning(self.ui, 'Warning', 'No output, please execute script first.')
             return
 
+        self.type = self.ui.itemTypeCombo.currentText()
         if self.type == 'Powershell':
             self.check[1] = self.ui.te_checkPSOutput.toPlainText()
         elif self.type == 'Python':

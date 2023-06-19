@@ -15,7 +15,7 @@ class MySignals(QObject):
     load_check_result = pyqtSignal(str)
     save_check_result = pyqtSignal(str)
     close_further_check = pyqtSignal(object)
-    update_check_all = pyqtSignal(bool)
+    update_check_all = pyqtSignal(dict)
 
 # class ExecutionSignal(QObject):
 #     update_execution_result = pyqtSignal(QTreeWidgetItem, list)

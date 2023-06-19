@@ -4,7 +4,7 @@ from core.login import Login
 from core.share import SI
 
 
-if __name__ == '__main__':
+def main():
     app = QApplication([])
     app.setWindowIcon(QIcon('./images/logo.png'))
     SI.loadDBCfgFile()
@@ -15,4 +15,10 @@ if __name__ == '__main__':
     SI.loginWin.ui.show()
     app.exec_()
 
+
+if __name__ == '__main__':
+    main()
+
+# >> pyinstaller main.py --noconfirm --hidden-import pymssql._mssql --icon="logo.ico"
 # >> pyinstaller main.py --noconsole --noconfirm --hidden-import pymssql._mssql --icon="logo.ico"
+## UI images

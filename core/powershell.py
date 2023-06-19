@@ -4,8 +4,7 @@ import subprocess as sp
 
 
 class PowerShell:
-    # from scapy
-    def __init__(self, coding, ):
+    def __init__(self, coding='UTF-8'):
         cmd = [self._where('PowerShell.exe'),
                "-NoLogo", "-NonInteractive",  # Do not print headers
                "-Command", "-"]  # Listen commands from stdin

@@ -1,0 +1,18 @@
+{
+    "CheckName": "test powersell",
+    "Status": "active",
+    "Type": "Powershell",
+    "Background": "TEST ping",
+    "CheckContent": [
+        "$servers=@(\"baidu.com\", \"taobao.com\", \"jd.com\") \nforeach ($s in $servers) {if(Test-NetConnection $s -I \"Quiet\") {echo \"OK $s\"} else {echo \"NOK $s\"}} ",
+        "isPass = True\nfor i in output.split('\\n'):\n    if \"NOK\" in i:\n        isPass = False"
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "check the related machines",
+    "CreatedBy": "Hao",
+    "CreatedDate": "2023-06-15",
+    "UpdatedBy": "Hao",
+    "UpdatedDate": "2023-06-15",
+    "SortOrder": "7"
+}

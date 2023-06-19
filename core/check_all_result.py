@@ -37,7 +37,7 @@ class CheckAllResult:
         SI.globalSignal.display_error.connect(self.display_error)
         SI.globalSignal.load_check_result.connect(self.display_error)
         SI.globalSignal.save_check_result.connect(self.display_error)
-        SI.globalSignal.update_check_all.connect(self.update_tree)
+        SI.globalSignal.update_check_all.connect(self.handle_update_all)
         self.ui.treeResult.itemDoubleClicked.connect(self.open_single_result)
         self.ui.rb_hidePass.toggled.connect(self.rb_hide_passed_toggled)
 
@@ -142,7 +142,7 @@ class CheckAllResult:
         elif si_item.type == 'Powershell':
             ps_cmd = si_item.check[0]
             # print(ps_cmd)
-            with PowerShell('GBK') as ps:
+            with PowerShell() as ps:
                 outs, errs = ps.run(ps_cmd)
             outs = str(outs)
             errs = str(errs)
@@ -315,3 +315,14 @@ class CheckAllResult:
             item_name = item.text(0)
             check = CheckResult.get_check(item_name, SI.ChecksToday)
             self.update_result(item, check["check_result"])
+
+    def set_current_item(self, check):
+        for item in self.itemlist:
+            item_name = item.text(0)
+            if item_name == check["check_name"]:
+                self.ui.treeResult.setCurrentItem(item)
+                return
+
+    def handle_update_all(self, check):
+        self.update_tree()
+        self.set_current_item(check)
