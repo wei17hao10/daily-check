@@ -11,9 +11,8 @@ class Login:
         # self.ui.loginButton.entered.connect(self.handleclk)
 
     def handle_click(self):
-        # print('handle click')
         luser = self.ui.lineUser.text()
-        # print('luser=', luser)
+        SI.logger.debug(f'the login user is {luser}')
         userlist = []
         # print('userinfo', SI.userinfo)
         for user in SI.userinfo['Users']:
@@ -30,4 +29,6 @@ class Login:
         else:
             # print('error username')
             QMessageBox.warning(self.ui, 'Warning', f'User info is not correct.')
+
+        raise ValueError('raise value error test')
 

@@ -142,11 +142,14 @@ class CheckAllResult:
         elif si_item.type == 'Powershell':
             ps_cmd = si_item.check[0]
             # print(ps_cmd)
-            with PowerShell() as ps:
-                outs, errs = ps.run(ps_cmd)
-            outs = str(outs)
-            errs = str(errs)
-            res = 'Output:\n' + outs + '\nErrors:\n' + errs
+            try:
+                with PowerShell() as ps:
+                    outs, errs = ps.run(ps_cmd)
+                outs = str(outs)
+                errs = str(errs)
+                res = 'Output:\n' + outs + '\nErrors:\n' + errs
+            except UnicodeError:
+                res = 'UnicodeError'
 
             if self.validate_result(res, si_item):
                 check_result = 'auto pass'
@@ -301,8 +304,8 @@ class CheckAllResult:
 
                 self.ui.lineStart.setReadOnly(True)
                 local_time = datetime.fromtimestamp(
-                    datetime.strptime(SI.ChecksToday["check_date"], '%Y-%m-%d %H:%M:%S').timestamp() - timezone).strftime(
-                    '%Y-%m-%d %H:%M:%S')
+                    datetime.strptime(SI.ChecksToday["check_date"], '%Y-%m-%d %H:%M:%S').timestamp()
+                    - timezone).strftime('%Y-%m-%d %H:%M:%S')
                 self.ui.lineStart.setText(local_time)
                 self.update_tree()
 
@@ -314,7 +317,8 @@ class CheckAllResult:
         for item in self.itemlist:
             item_name = item.text(0)
             check = CheckResult.get_check(item_name, SI.ChecksToday)
-            self.update_result(item, check["check_result"])
+            if check:
+                self.update_result(item, check["check_result"])
 
     def set_current_item(self, check):
         for item in self.itemlist:

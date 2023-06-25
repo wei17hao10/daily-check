@@ -225,12 +225,14 @@ class SingleCheckResult:
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setText("The powershell script is executing, please wait.")
         msg_box.show()
-
-        with PowerShell() as ps:
-            outs, errs = ps.run(self.check_cmd)
-        outs = str(outs)
-        errs = str(errs)
-        output = 'Output:\n' + outs + '\nErrors:\n' + errs
+        try:
+            with PowerShell() as ps:
+                outs, errs = ps.run(self.check_cmd)
+            outs = str(outs)
+            errs = str(errs)
+            output = 'Output:\n' + outs + '\nErrors:\n' + errs
+        except UnicodeError as e:
+            output = 'UnicodeError: ' + str(e)
 
         msg_box.setWindowTitle("Result")
         msg_box.setText(output)
@@ -357,10 +359,11 @@ class SingleCheckResult:
                 i += 1
                 if i < nlistlen:
                     current_check = CheckResult.get_check(self.namelist[i], SI.ChecksToday)
-                    if current_check["check_result"][2] == "auto pass" and self.is_hide_pass:
-                        continue
-                    self.init_again(current_check)
-                    break
+                    if current_check:
+                        if current_check["check_result"][2] == "auto pass" and self.is_hide_pass:
+                            continue
+                        self.init_again(current_check)
+                        break
                 else:
                     QMessageBox.information(self.ui, 'Info', 'This is the last check item.')
                     break

@@ -58,11 +58,11 @@ class AddItem:
         try:
             with PowerShell() as ps:
                 outs, errs = ps.run(ps_cmd)
-        except:
-            errs = 'Powershell module execution error'
-        outs = str(outs)
-        errs = str(errs)
-        self.output = 'Output:\n' + outs + '\nErrors:\n' + errs
+                outs = str(outs)
+                errs = str(errs)
+                self.output = 'Output:\n' + outs + '\nErrors:\n' + errs
+        except UnicodeError as e:
+            self.output = 'UnicodeError: ' + str(e)
 
         msg_box.setWindowTitle("Result")
         msg_box.setText(self.output)

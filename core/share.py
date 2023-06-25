@@ -6,6 +6,7 @@ from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QTreeWidgetItem, QMessageBox
 from datetime import datetime, timedelta
 import pandas as pd
+from core.log import MyLogger
 
 
 class MySignals(QObject):
@@ -40,6 +41,7 @@ class SI:
     Checks2Day = {}
     Checks3Day = {}
     globalSignal = MySignals()
+    logger = MyLogger()
 
     @staticmethod
     def loadDBCfgFile():
