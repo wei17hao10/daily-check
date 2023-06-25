@@ -1,0 +1,18 @@
+{
+    "CheckName": "add new check test",
+    "Status": "active",
+    "Type": "Manual",
+    "Background": "add new check",
+    "CheckContent": [
+        "add new check",
+        ""
+    ],
+    "OBCondition": "",
+    "JBQCondition": "",
+    "Operations": "add new check",
+    "CreatedBy": "test",
+    "CreatedDate": "2023-06-21",
+    "UpdatedBy": "test",
+    "UpdatedDate": "2023-06-21",
+    "SortOrder": "9"
+}
