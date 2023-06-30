@@ -219,6 +219,8 @@ class SingleCheckResult:
             msg_box.setWindowTitle("Warning")
             msg_box.setText('output is not defined, please check!')
 
+        msg_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
     def execute_ps(self):
         msg_box = QMessageBox(self.ui)
         msg_box.setWindowTitle("Executing...")

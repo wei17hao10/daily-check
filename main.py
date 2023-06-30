@@ -26,8 +26,8 @@ def main():
     # SI.mainWin.ui.show()
     SI.loginWin = Login()
     SI.loginWin.ui.show()
-    app.exec_()
-    # sys.exit(app.exec_())
+    # app.exec_()
+    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':

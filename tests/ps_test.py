@@ -51,7 +51,7 @@ class PowerShell:
 
 if __name__ == '__main__':
     # Example:
-    cmd = 'ping taobao.com'
+    cmd = 'conda list'
     errs = ''
     outs = ''
     try:

@@ -6,6 +6,7 @@ from core.user_config import UserConfig
 from core.db_config import DBConfig
 from core.check_item_config import CheckItemConfig
 from core.check_all_result import CheckAllResult
+from core.python_editor import PythonEditor
 
 
 class MainWindow:
@@ -18,6 +19,7 @@ class MainWindow:
         self.ui.actionCheck_Item_Config.triggered.connect(self.open_check_item_config)
         self.ui.actionExit.triggered.connect(self.exit_main)
         self.ui.actionExecute_all.triggered.connect(self.execute_all)
+        self.ui.actionPythonEditor.triggered.connect(self.open_python_editor)
 
         self.put_actions()
 
@@ -90,3 +92,6 @@ class MainWindow:
 
     def execute_all(self):
         self._open_sub_window(CheckAllResult)
+
+    def open_python_editor(self):
+        self._open_sub_window(PythonEditor)
