@@ -38,6 +38,7 @@ class MainWindow:
         self.switch_action(priv_conf, self.ui.actionUser_Config)
         self.switch_action(priv_conf, self.ui.actionDB_Config)
         self.switch_action(priv_conf, self.ui.actionCheck_Item_Config)
+        self.switch_action(priv_conf, self.ui.actionPythonEditor)
         self.switch_action(priv_exe, self.ui.actionExecute_all)
         self.switch_action(2, self.ui.actionExit)
 

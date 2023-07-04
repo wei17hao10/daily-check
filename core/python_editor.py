@@ -70,10 +70,13 @@ class PythonEditor:
                                                             "Save File",
                                                             "./",
                                                             "Python File (*.py);;Text File (*.txt)")
-            file = open(self.file_path, 'w')
-            file.write(code)
-            file.close()
-            self.form.lb_path.setText(self.file_path)
+            if self.file_path == '':
+                self.file_path = None
+            else:
+                file = open(self.file_path, 'w')
+                file.write(code)
+                file.close()
+                self.form.lb_path.setText(self.file_path)
             # QMessageBox.information(self.ui, "Info", "Python script saved.")
 
     def close(self):
