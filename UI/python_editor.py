@@ -1,3 +1,5 @@
+# pyuic5 -o python_editor.py UI\python_editor.ui
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.Qsci import QsciScintilla, QsciLexerPython
 from PyQt5.QtGui import QColor, QFont
@@ -8,7 +10,34 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(632, 506)
         Form.setStyleSheet("font: 9pt \"Titillium Web\";")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(Form)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalGroupBox = QtWidgets.QGroupBox(Form)
+        self.horizontalGroupBox.setObjectName("horizontalGroupBox")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalGroupBox)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        # self.btn_new = QtWidgets.QPushButton(self.horizontalGroupBox)
+        # self.btn_new.setObjectName("btn_new")
+        # self.horizontalLayout_2.addWidget(self.btn_new)
+        self.btn_open = QtWidgets.QPushButton(self.horizontalGroupBox)
+        self.btn_open.setObjectName("btn_open")
+        self.horizontalLayout_2.addWidget(self.btn_open)
+        self.btn_save = QtWidgets.QPushButton(self.horizontalGroupBox)
+        self.btn_save.setObjectName("btn_save")
+        self.horizontalLayout_2.addWidget(self.btn_save)
+        self.btn_close = QtWidgets.QPushButton(self.horizontalGroupBox)
+        self.btn_close.setObjectName("btn_close")
+        self.horizontalLayout_2.addWidget(self.btn_close)
+        self.btn_execute = QtWidgets.QPushButton(self.horizontalGroupBox)
+        self.btn_execute.setObjectName("btn_execute")
+        self.horizontalLayout_2.addWidget(self.btn_execute)
+        self.lb_path = QtWidgets.QLabel(self.horizontalGroupBox)
+        self.lb_path.setObjectName("lb_path")
+        self.horizontalLayout_2.addWidget(self.lb_path)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
+        self.verticalLayout_3.addWidget(self.horizontalGroupBox)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalGroupBox = QtWidgets.QGroupBox(Form)
         self.verticalGroupBox.setObjectName("verticalGroupBox")
@@ -26,7 +55,7 @@ class Ui_Form(object):
         self.te_python.setObjectName("te_python")
         self.verticalLayout.addWidget(self.te_python)
 
-        self.te_python.setText("print('hello word')")
+        self.te_python.setText("print('hello world')")
         lexer = QsciLexerPython()
         self.te_python.setLexer(lexer)
         self.te_python.setUtf8(True)  # Set encoding to UTF-8
@@ -57,9 +86,6 @@ class Ui_Form(object):
         self.te_python.setMarginWidth(1, "0000")  # 改动标记占用的宽度
 ######################################
 
-        self.btn_execute = QtWidgets.QPushButton(self.verticalGroupBox)
-        self.btn_execute.setObjectName("btn_execute")
-        self.verticalLayout.addWidget(self.btn_execute)
         self.horizontalLayout.addWidget(self.verticalGroupBox)
         self.verticalGroupBox1 = QtWidgets.QGroupBox(Form)
         self.verticalGroupBox1.setObjectName("verticalGroupBox1")
@@ -70,6 +96,7 @@ class Ui_Form(object):
         self.tb_result.setObjectName("tb_result")
         self.verticalLayout_2.addWidget(self.tb_result)
         self.horizontalLayout.addWidget(self.verticalGroupBox1)
+        self.verticalLayout_3.addLayout(self.horizontalLayout)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -77,6 +104,11 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.verticalGroupBox.setTitle(_translate("Form", "Python script editor"))
+        # self.btn_new.setText(_translate("Form", "New"))
+        self.btn_open.setText(_translate("Form", "Open"))
+        self.btn_save.setText(_translate("Form", "Save"))
+        self.btn_close.setText(_translate("Form", "Close"))
         self.btn_execute.setText(_translate("Form", "Execute"))
+        self.lb_path.setText(_translate("Form", "unsaved file"))
+        self.verticalGroupBox.setTitle(_translate("Form", "Python script editor"))
         self.verticalGroupBox1.setTitle(_translate("Form", "Result display"))
