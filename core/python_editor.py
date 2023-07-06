@@ -34,6 +34,8 @@ class PythonEditor:
 
     def execute_python(self):
         self.save()
+        if not isinstance(self.file_path, str):
+            return
 
         with stdoutIO() as s:
             try:
@@ -119,4 +121,4 @@ class PythonEditor:
                 elif result == QMessageBox.Cancel:
                     pass
         self.file_path = None
-        self.form.lb_path.setText("unsaved file")
+        self.form.lb_path.setText("unsaved file (can not be executed)")

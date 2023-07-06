@@ -51,7 +51,7 @@
       <item>
        <widget class="QLabel" name="lb_path">
         <property name="text">
-         <string>unsaved file</string>
+         <string>unsaved file (can not be executed)</string>
         </property>
        </widget>
       </item>

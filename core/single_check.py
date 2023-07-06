@@ -252,10 +252,12 @@ class SingleCheckResult:
             cursor.execute(self.check_cmd)
             self.fields = [field[0] for field in cursor.description]
             self.rows = cursor.fetchall()
-        except pymssql.ProgrammingError:
-            QMessageBox.warning(self.ui, 'Warning', 'Programming Error, please check the SQL.')
-        except pymssql.Error:
-            QMessageBox.warning(self.ui, 'Warning', 'General Error')
+        except pymssql.ProgrammingError as e:
+            SI.logger.warning(str(e))
+            QMessageBox.warning(self.ui, 'Warning', str(e))
+        except pymssql.Error as e:
+            SI.logger.warning(str(e))
+            QMessageBox.warning(self.ui, 'Warning', str(e))
         else:
             self.ui.line_num.setText(str(len(self.rows)))
         self.single_exe_flag = False

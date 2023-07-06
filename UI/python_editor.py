@@ -109,6 +109,6 @@ class Ui_Form(object):
         self.btn_save.setText(_translate("Form", "Save"))
         self.btn_close.setText(_translate("Form", "Close"))
         self.btn_execute.setText(_translate("Form", "Execute"))
-        self.lb_path.setText(_translate("Form", "unsaved file"))
+        self.lb_path.setText(_translate("Form", "unsaved file (can not be executed)"))
         self.verticalGroupBox.setTitle(_translate("Form", "Python script editor"))
         self.verticalGroupBox1.setTitle(_translate("Form", "Result display"))
