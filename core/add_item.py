@@ -221,14 +221,14 @@ class AddItem:
                 return True
         elif self.type == 'Manual':
             self.background = self.ui.MBackgroundText.toPlainText()
-            self.check[0] = self.ui.MCheckProcessText.toPlainText()
+            # self.check[0] = self.ui.MCheckProcessText.toPlainText()
             self.operations = self.ui.MOpsText.toPlainText()
             if len(self.background.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input background info.')
                 return False
-            elif len(self.check[0].strip()) == 0:
-                QMessageBox.warning(self.ui, 'Warning', 'Please input manual check process.')
-                return False
+            # elif len(self.check[0].strip()) == 0:
+            #     QMessageBox.warning(self.ui, 'Warning', 'Please input manual check process.')
+            #     return False
             elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')
                 return False

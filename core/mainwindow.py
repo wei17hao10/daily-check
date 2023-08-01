@@ -1,3 +1,5 @@
+from threading import Thread
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMdiSubWindow
 from PyQt5.QtCore import Qt
@@ -96,3 +98,5 @@ class MainWindow:
 
     def open_python_editor(self):
         self._open_sub_window(PythonEditor)
+        # t = Thread(target=self._open_sub_window, kwargs={"FuncClass": PythonEditor})
+        # t.start()

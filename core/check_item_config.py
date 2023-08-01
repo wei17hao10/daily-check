@@ -27,7 +27,8 @@ class CheckItemConfig:
         self.ui.btn_Deactivate.clicked.connect(self.deactivate_item)
         self.ui.btn_Activate.clicked.connect(self.activate_item)
         self.ui.btn_Refresh.clicked.connect(self.refresh_display)
-        self.ui.itemTree.itemDoubleClicked.connect(self.set_sort_editable)
+        # self.ui.itemTree.itemDoubleClicked.connect(self.set_sort_editable)
+        self.ui.itemTree.itemDoubleClicked.connect(self.doubleclick_item)
         self.ui.itemTree.itemChanged.connect(self.sort_changed)
 
         # self.ms = MySignals()
@@ -51,24 +52,33 @@ class CheckItemConfig:
         # 'Updated Date': 5
         # }
 
-    def set_sort_editable(self, item, col):
+    def set_sort_editable(self, item):
+        item.setFlags(item.flags() | Qt.ItemIsEditable)
+        # item.setFlags(item.flags() & ~ Qt.ItemIsEditable)
+
+    def doubleclick_item(self, item, col):
         if col == self.headerName['Sort Order']:
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
+            self.set_sort_editable(item)
         else:
             item.setFlags(item.flags() & ~ Qt.ItemIsEditable)
+
+            self.modify_item()
 
     def sort_changed(self, tree_item, col):
         if col == self.headerName['Sort Order']:
             curritem = ItemMgt.get_item(tree_item.text(self.headerName['Item Name']))
             sorder = tree_item.text(col)
-            pattern = '^[1-9]$'
-            res = re.fullmatch(pattern, sorder)
-            if res is None:
-                QMessageBox.warning(self.ui, 'Warning', 'Number should between 1~9.')
-                tree_item.setText(col, curritem.sortOrder)
-            else:
-                curritem.sortOrder = sorder
-                curritem.save_check_item()
+
+            if curritem.sortOrder != sorder:
+                pattern = '^[1-9]$'
+                res = re.fullmatch(pattern, sorder)
+                if res is None:
+                    QMessageBox.warning(self.ui, 'Warning', 'Number should between 1~9.')
+                    tree_item.setText(col, curritem.sortOrder)
+                else:
+                    curritem.sortOrder = sorder
+                    curritem.save_check_item()
+                    SI.logger.debug(f'sort changed: {curritem.itemname}')
 
     def refresh_display(self):
         ItemMgt.update_itemdf()
