@@ -379,20 +379,27 @@ class SingleCheckResult:
         else:
             self.update_comment()
             self.close_db_conn()
-            CheckResult.save_result()
+            # CheckResult.save_result()
             self.ui.close()
             SI.globalSignal.update_check_all.emit(self.current_check)
             SI.mainWin.ui.hide()
             SI.mainWin.ui.show()
 
     def update_comment(self):
+        update_file = 0
         today_check = CheckResult.get_check(self.check_name, SI.ChecksToday)
         this_comment = self.ui.textComments.toPlainText()
         if today_check["comment"] != this_comment:
             today_check["comment"] = this_comment
+            update_file = 1
 
         final = "Operation Done" if self.ui.radioOpDone.isChecked() else "No Operation"
-        today_check["check_result"][2] = final
+        if today_check["check_result"][2] != final:
+            today_check["check_result"][2] = final
+            update_file = 1
+
+        if update_file == 1:
+            CheckResult.save_result()
 
     def click_previous_1(self):
         self.ui.btn_day1ago.setStyleSheet(self.btn_style["blue"])
