@@ -33,6 +33,5 @@ def main():
 if __name__ == '__main__':
     main()
 
-# >> pyinstaller main.py --noconfirm --hidden-import pymssql._mssql --icon="logo.ico"
 # >> pyinstaller main.py --noconsole --noconfirm --hidden-import pymssql._mssql --icon="logo.ico"
 ## UI images

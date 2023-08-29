@@ -15,7 +15,7 @@ class AddItem:
     def __init__(self):
         self.ui = uic.loadUi("./UI/additemwidget.ui")
         self.background = ''
-        self.check = ['', '']
+        self.check = ['', '', '']
         self.obcondition = ''
         self.jbqcondition = ''
         self.operations = ''
@@ -32,7 +32,9 @@ class AddItem:
         # self.ui.lineThreshold.setText(self.check[1])
         self.ui.itemTypeCombo.addItems(SI.ITEM_TYPE)
         self.ui.itemTypeCombo.currentIndexChanged.connect(self.handle_selection_change)
-        self.ui.lineThreshold.setText('0')
+        # self.ui.lineThreshold.setText('0')
+        self.ui.lineUpLimit.setText('0')
+        self.ui.lineDnLimit.setText('0')
 
         self.ui.btn_OK.clicked.connect(self.ok_clicked)
         self.ui.btn_cancel.clicked.connect(self.cancel_clicked)
@@ -199,7 +201,9 @@ class AddItem:
         if self.type == 'SQL':
             self.background = self.ui.SQLBackgroundText.toPlainText()
             self.check[0] = self.ui.checkSQLText.toPlainText()
-            self.check[1] = self.ui.lineThreshold.text()
+            # self.check[1] = self.ui.lineThreshold.text()
+            self.check[1] = self.ui.lineUpLimit.text()
+            self.check[2] = self.ui.lineDnLimit.text()
             self.operations = self.ui.SQLOpsText.toPlainText()
             self.obcondition = self.ui.OBText.toPlainText()
             self.jbqcondition = self.ui.JBQText.toPlainText()
@@ -210,8 +214,11 @@ class AddItem:
             elif len(self.check[0].strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input SQL.')
                 return False
-            elif not self.check[1].isdigit():
-                QMessageBox.warning(self.ui, 'Warning', 'Threshold is not a number.')
+            elif not self.check[1].isdigit() or not self.check[2].isdigit():
+                QMessageBox.warning(self.ui, 'Warning', 'Limit is not a number.')
+                return False
+            elif not 0 <= int(self.check[1]) <= int(self.check[2]):
+                QMessageBox.warning(self.ui, 'Warning', 'Limit is not correct.')
                 return False
             elif len(self.operations.strip()) == 0:
                 QMessageBox.warning(self.ui, 'Warning', 'Please input Operations steps when check failed.')

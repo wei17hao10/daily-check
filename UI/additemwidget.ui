@@ -208,7 +208,7 @@
          </item>
          <item>
           <widget class="QGroupBox" name="exeSQLGroup">
-           <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1">
+           <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,1">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
@@ -226,12 +226,12 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Threshold</string>
+                 <string>Up limit</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineThreshold">
+               <widget class="QLineEdit" name="lineUpLimit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -242,6 +242,20 @@
                  <set>Qt::AlignCenter</set>
                 </property>
                </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>Dn limit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineDnLimit"/>
               </item>
              </layout>
             </item>

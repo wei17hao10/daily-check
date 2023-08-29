@@ -12,6 +12,9 @@ import os
 
 class SingleCheckResult:
     def __init__(self, current_check, is_hide_pass):
+        self.dn_limit = None
+        self.up_limit = None
+        self.type = None
         self.ui = uic.loadUi("UI/further check.ui")
         # self.ui = UI.further_check.Ui_Form()
         # self.widget = MyWidget()
@@ -120,6 +123,11 @@ class SingleCheckResult:
         self.ui.line_num.setReadOnly(True)
         self.ui.line_num.setText(str(result_num))
 
+        self.type = item.type
+        self.up_limit = item.check[2]
+        self.dn_limit = item.check[1]
+        self.ui.lb_rule.mousePressEvent = self.on_hover_tip_rule
+
         final = today_check["check_result"][2]
         if final == "Operation Done":
             self.ui.radioOpDone.toggle()
@@ -129,7 +137,7 @@ class SingleCheckResult:
         self.ui.btn_check.setStyleSheet(self.btn_style["black"])
         self.ui.btn_result.setStyleSheet(self.btn_style["black"])
 
-        if len(self.check_cmd.strip()) > 0 and item.type == 'SQL':
+        if len(self.check_cmd.strip()) > 0 and self.type == 'SQL':
             self.ui.btn_SQL.setStyleSheet(self.btn_style["black"])
         else:
             self.ui.btn_SQL.setStyleSheet(self.btn_style["grey"])
@@ -440,3 +448,10 @@ class SingleCheckResult:
         if self.conn is not None:
             self.conn.close()
             self.conn = None
+
+    def on_hover_tip_rule(self, event):
+        if self.type == 'SQL':
+            tip = f'Rule: {self.dn_limit} <= val <= {self.up_limit}'
+        else:
+            tip = ''
+        self.ui.lb_rule.setToolTip(tip)

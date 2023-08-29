@@ -62,7 +62,7 @@ class CheckItem:
         self.status = ''
         self.type = ''
         self.background = ''
-        self.check = ['', '0']
+        self.check = ['', '0', '0']
         self.obcondition = ''
         self.jbqcondition = ''
         self.operations = ''
@@ -125,6 +125,8 @@ class CheckItem:
             self.check[0] = content[0]
         if self.check[1] != content[1]:
             self.check[1] = content[1]
+        if self.check[2] != content[2]:
+            self.check[2] = content[2]
 
     def update_obc(self, content):
         if self.obcondition != content:
